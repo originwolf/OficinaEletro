@@ -406,7 +406,7 @@ public class FormAparelho extends javax.swing.JDialog {
             .addComponent(painelNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(abaDados, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)
+                .addComponent(abaDados)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

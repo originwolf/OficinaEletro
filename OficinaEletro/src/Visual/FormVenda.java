@@ -8,10 +8,10 @@ package Visual;
 import Modelo.Aparelho;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import Modelo.DAOAparelho;
 import Modelo.Cliente;
 import Modelo.DAOCliente;
 import Modelo.DAOVenda;
+import Modelo.Venda;
 
 /**
  *
@@ -94,7 +94,7 @@ public class FormVenda extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Aparelho>());
+        listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Venda>());
         listCliente = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Cliente>());
         converteData1 = new Modelo.ConverteData();
         painelNavegacao = new javax.swing.JPanel();
@@ -177,7 +177,8 @@ public class FormVenda extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, tblVenda);
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${}");
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, eLProperty, tblVenda);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idVenda}"));
         columnBinding.setColumnName("Código");
         columnBinding.setEditable(false);
@@ -348,7 +349,7 @@ public class FormVenda extends javax.swing.JDialog {
 
     private void btnNovoAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoAparelhoActionPerformed
         // TODO add your handling code here:
-        listVenda.add((Aparelho) new Aparelho());
+        listVenda.add((Venda) new Venda());
         int linha = listVenda.size() -1;
         tblVenda.setRowSelectionInterval(linha, linha);
         txtDataVenda.requestFocus();
@@ -385,7 +386,7 @@ public class FormVenda extends javax.swing.JDialog {
                  null, new String [] {"Sim","Não"},"Sim");     
          if(opcao==0){    
              int linhaSelecionada = tblVenda.getSelectedRow();         
-             Aparelho obj = listVenda.get(linhaSelecionada);        
+             Venda obj = listVenda.get(linhaSelecionada);        
              daoVenda.remover(obj);        
              atualizaTabela();   
              trataEdicao(false);      
