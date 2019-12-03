@@ -14,7 +14,7 @@
 
 -- Dumping database structure for oficinaeletro
 CREATE DATABASE IF NOT EXISTS `oficinaeletro` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `oficinaeletro`;
+USE `oficinaeletro`;oficinaeletroestoque
 
 -- Dumping structure for table oficinaeletro.aparelho
 CREATE TABLE IF NOT EXISTS `aparelho` (
