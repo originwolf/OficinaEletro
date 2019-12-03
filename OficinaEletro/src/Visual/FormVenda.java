@@ -57,11 +57,7 @@ public class FormVenda extends javax.swing.JDialog {
         int linha = listVenda.size() - 1;
         if (linha < 0) {
             btnExcluirAparelho.setEnabled(false);
-            txtCodigoAparelhos.setText("");
-            txtNomeAparelhos.setText("");
-            txtMarcaAparelhos.setText("");
             txtDataVenda.setText("");
-            txtDataGarantia.setText("");
         } else {
             btnExcluirAparelho.setEnabled(!editando);
         }
@@ -72,21 +68,19 @@ public class FormVenda extends javax.swing.JDialog {
         btnProximoAparelho.setEnabled(!editando);
         btnAnteriorAparelho.setEnabled(!editando);
         btnUltimoAparelho.setEnabled(!editando);
-        txtNomeAparelhos.setEnabled(editando);
-        txtMarcaAparelhos.setEnabled(editando);
+        txtCodigoVenda.setEnabled(editando);
         txtDataVenda.setEditable(editando);
-        txtDataGarantia.setEditable(editando);
         cbxCliente.setEnabled(editando);
-        tblAparelho.setEnabled(editando);
+        tblVenda.setEnabled(editando);
     }
     
     public void atualizaTabela() {
         listVenda.clear();
-        listVenda.addAll(daoAparelho.getLista());
+        listVenda.addAll(daoVenda.getLista());
         int linha = listVenda.size() - 1;
         if (linha >= 0) {
-            tblAparelho.setRowSelectionInterval(linha, linha);
-            tblAparelho.scrollRectToVisible(tblAparelho.getCellRect(linha, linha, true));
+            tblVenda.setRowSelectionInterval(linha, linha);
+            tblVenda.scrollRectToVisible(tblVenda.getCellRect(linha, linha, true));
         }
     }
     
@@ -112,7 +106,7 @@ public class FormVenda extends javax.swing.JDialog {
         abaDados = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblAparelho = new javax.swing.JTable();
+        tblVenda = new javax.swing.JTable();
         painelDadosAparelho = new javax.swing.JPanel();
         painelAcaoAparelho = new javax.swing.JPanel();
         btnNovoAparelho = new javax.swing.JButton();
@@ -183,7 +177,7 @@ public class FormVenda extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, tblAparelho);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, tblVenda);
         org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idVenda}"));
         columnBinding.setColumnName("Código");
         columnBinding.setEditable(false);
@@ -196,7 +190,7 @@ public class FormVenda extends javax.swing.JDialog {
         columnBinding.setEditable(false);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
-        jScrollPane2.setViewportView(tblAparelho);
+        jScrollPane2.setViewportView(tblVenda);
 
         jPanel1.add(jScrollPane2, java.awt.BorderLayout.PAGE_START);
 
@@ -250,7 +244,7 @@ public class FormVenda extends javax.swing.JDialog {
 
         txtCodigoVenda.setEnabled(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblAparelho, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idAparelho}"), txtCodigoVenda, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idAparelho}"), txtCodigoVenda, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txtCodigoVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -261,7 +255,7 @@ public class FormVenda extends javax.swing.JDialog {
 
         jLabel2.setText("Data de Recebimento:");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblAparelho, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataRecebimentoAparelho}"), txtDataVenda, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataRecebimentoAparelho}"), txtDataVenda, org.jdesktop.beansbinding.BeanProperty.create("value"));
         binding.setConverter(converteData1);
         bindingGroup.addBinding(binding);
 
@@ -269,7 +263,7 @@ public class FormVenda extends javax.swing.JDialog {
 
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listCliente, cbxCliente);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblAparelho, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idCliente}"), cbxCliente, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idCliente}"), cbxCliente, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
 
         javax.swing.GroupLayout painelDadosAparelhoLayout = new javax.swing.GroupLayout(painelDadosAparelho);
@@ -356,26 +350,26 @@ public class FormVenda extends javax.swing.JDialog {
         // TODO add your handling code here:
         listVenda.add((Aparelho) new Aparelho());
         int linha = listVenda.size() -1;
-        tblAparelho.setRowSelectionInterval(linha, linha);
-        txtNomeAparelhos.requestFocus();
+        tblVenda.setRowSelectionInterval(linha, linha);
+        txtDataVenda.requestFocus();
         trataEdicao(true);
     }//GEN-LAST:event_btnNovoAparelhoActionPerformed
 
     private void btnSalvarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAparelhoActionPerformed
         // TODO add your handling code here:
         if(validaCampos()){
-            int linhaSelecionada = tblAparelho.getSelectedRow(); 
-            Aparelho obj = listVenda.get(linhaSelecionada);
-            daoAparelho.salvar(obj); 
+            int linhaSelecionada = tblVenda.getSelectedRow(); 
+            Venda obj = listVenda.get(linhaSelecionada);
+            daoVenda.salvar(obj); 
             atualizaTabela();
             trataEdicao(false);
-        }     
+        }
     }//GEN-LAST:event_btnSalvarAparelhoActionPerformed
 
     private void btnEditarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAparelhoActionPerformed
         // TODO add your handling code here:
         trataEdicao(true);
-        txtNomeAparelhos.requestFocus();
+        txtDataVenda.requestFocus();
     }//GEN-LAST:event_btnEditarAparelhoActionPerformed
 
     private void btnCancelarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAparelhoActionPerformed
@@ -390,9 +384,9 @@ public class FormVenda extends javax.swing.JDialog {
                  "Pergunta",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, 
                  null, new String [] {"Sim","Não"},"Sim");     
          if(opcao==0){    
-             int linhaSelecionada = tblAparelho.getSelectedRow();         
+             int linhaSelecionada = tblVenda.getSelectedRow();         
              Aparelho obj = listVenda.get(linhaSelecionada);        
-             daoAparelho.remover(obj);        
+             daoVenda.remover(obj);        
              atualizaTabela();   
              trataEdicao(false);      
          }     
@@ -400,38 +394,38 @@ public class FormVenda extends javax.swing.JDialog {
 
     private void btnPrimeiroAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrimeiroAparelhoActionPerformed
         // TODO add your handling code here:
-        tblAparelho.setRowSelectionInterval(0, 0);
-        tblAparelho.scrollRectToVisible(tblAparelho.getCellRect(0, 0, true));
+        tblVenda.setRowSelectionInterval(0, 0);
+        tblVenda.scrollRectToVisible(tblVenda.getCellRect(0, 0, true));
     }//GEN-LAST:event_btnPrimeiroAparelhoActionPerformed
 
     private void btnAnteriorAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorAparelhoActionPerformed
         // TODO add your handling code here:
-        int linha = tblAparelho.getSelectedRow();
+        int linha = tblVenda.getSelectedRow();
         if ((linha - 1) >= 0) {
             linha--;
         }
-        tblAparelho.setRowSelectionInterval(linha, linha);
-        tblAparelho.scrollRectToVisible(tblAparelho.getCellRect(linha, 0, true));
+        tblVenda.setRowSelectionInterval(linha, linha);
+        tblVenda.scrollRectToVisible(tblVenda.getCellRect(linha, 0, true));
     }//GEN-LAST:event_btnAnteriorAparelhoActionPerformed
 
     private void btnProximoAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProximoAparelhoActionPerformed
         // TODO add your handling code here:
-        int linha = tblAparelho.getSelectedRow();
-        if ((linha + 1) <= tblAparelho.getRowCount() - 1) {
+        int linha = tblVenda.getSelectedRow();
+        if ((linha + 1) <= tblVenda.getRowCount() - 1) {
             linha++;
         }
-        tblAparelho.setRowSelectionInterval(linha, linha);
-        tblAparelho.scrollRectToVisible(tblAparelho.getCellRect(linha, 0, true));
+        tblVenda.setRowSelectionInterval(linha, linha);
+        tblVenda.scrollRectToVisible(tblVenda.getCellRect(linha, 0, true));
     }//GEN-LAST:event_btnProximoAparelhoActionPerformed
 
     private void btnUltimoAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUltimoAparelhoActionPerformed
         // TODO add your handling code here:
-        int linha = tblAparelho.getSelectedRow();
-        if ((linha + 1) <= tblAparelho.getRowCount() - 1) {
+        int linha = tblVenda.getSelectedRow();
+        if ((linha + 1) <= tblVenda.getRowCount() - 1) {
             linha++;
         }
-        tblAparelho.setRowSelectionInterval(linha, linha);
-        tblAparelho.scrollRectToVisible(tblAparelho.getCellRect(linha, 0, true));
+        tblVenda.setRowSelectionInterval(linha, linha);
+        tblVenda.scrollRectToVisible(tblVenda.getCellRect(linha, 0, true));
     }//GEN-LAST:event_btnUltimoAparelhoActionPerformed
 
     private void txtCodigoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoVendaActionPerformed
@@ -504,7 +498,7 @@ public class FormVenda extends javax.swing.JDialog {
     private javax.swing.JPanel painelAcaoAparelho;
     private javax.swing.JPanel painelDadosAparelho;
     private javax.swing.JPanel painelNavegacao;
-    private javax.swing.JTable tblAparelho;
+    private javax.swing.JTable tblVenda;
     private javax.swing.JLabel txtCodigoAparelhos;
     private javax.swing.JTextField txtCodigoVenda;
     private javax.swing.JFormattedTextField txtDataVenda;
