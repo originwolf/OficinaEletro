@@ -169,21 +169,7 @@
                     </Property>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="elements" source="listVenda" sourcePath="${}" target="tblVenda" targetPath="elements" updateStrategy="0" immediately="true">
-                      <Subbinding sourcePath="${idVenda}">
-                        <BindingParameter name="NAME" value="C&#xf3;digo"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${dataVenda}">
-                        <BindingParameter name="NAME" value="Data da venda"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
-                      </Subbinding>
-                      <Subbinding sourcePath="${idCliente}">
-                        <BindingParameter name="NAME" value="Cliente"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Modelo.Cliente.class"/>
-                        <BindingParameter name="javax.swing.binding.ParameterKeys.EDITABLE" value="false"/>
-                      </Subbinding>
-                    </BindingProperty>
+                    <BindingProperty name="elements" source="listVenda" sourcePath="${idVenda}" target="tblVenda" targetPath="elements" updateStrategy="0" immediately="true"/>
                   </BindingProperties>
                 </Component>
               </SubComponents>

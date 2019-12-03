@@ -35,7 +35,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         btnVenda = new javax.swing.JButton();
         btnTecnico = new javax.swing.JButton();
         btnImagem = new javax.swing.JButton();
-        btnEstoque1 = new javax.swing.JButton();
+        btnEstoque = new javax.swing.JButton();
         barraMenu = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
         menuAparelho = new javax.swing.JMenuItem();
@@ -99,13 +99,13 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnEstoque1.setBackground(java.awt.Color.darkGray);
-        btnEstoque1.setForeground(new java.awt.Color(255, 255, 255));
-        btnEstoque1.setText("Estoque");
-        btnEstoque1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnEstoque1.addActionListener(new java.awt.event.ActionListener() {
+        btnEstoque.setBackground(java.awt.Color.darkGray);
+        btnEstoque.setForeground(new java.awt.Color(255, 255, 255));
+        btnEstoque.setText("Estoque");
+        btnEstoque.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEstoque1ActionPerformed(evt);
+                btnEstoqueActionPerformed(evt);
             }
         });
 
@@ -124,7 +124,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnVenda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEstoque1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnEstoque, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnImagem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -142,7 +142,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEstoque1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnImagem, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -298,9 +298,14 @@ public class FormPrincipal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"Sistema de Gerenciamento para Oficinas de Assistência Técnica.\nDireitos Reservados");
     }//GEN-LAST:event_btnImagemActionPerformed
 
-    private void btnEstoque1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoque1ActionPerformed
+    private void btnEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEstoqueActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEstoque1ActionPerformed
+        FormEstoque form = new FormEstoque(this,true);
+        form.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);//não deixa fechar a janela pelo x
+        form.setLocationRelativeTo(null); // centralizar a janela
+        form.setResizable(true); // retirar o botão de maximizar
+        form.setVisible(true);
+    }//GEN-LAST:event_btnEstoqueActionPerformed
 
     /**
      * @param args the command line arguments
@@ -346,7 +351,7 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnAparelho;
     private javax.swing.JButton btnCliente;
-    private javax.swing.JButton btnEstoque1;
+    private javax.swing.JButton btnEstoque;
     private javax.swing.JButton btnImagem;
     private javax.swing.JButton btnTecnico;
     private javax.swing.JButton btnVenda;
