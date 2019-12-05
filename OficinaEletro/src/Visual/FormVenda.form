@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Component class="java.util.List" name="listVenda">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList&lt;Venda&gt;())"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList&lt;Venda&gt; ( ) )"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Venda&gt;"/>
       </AuxValues>
     </Component>
@@ -169,7 +169,20 @@
                     </Property>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="elements" source="listVenda" sourcePath="${idVenda}" target="tblVenda" targetPath="elements" updateStrategy="0" immediately="true"/>
+                    <BindingProperty name="elements" source="listVenda" target="tblVenda" targetPath="elements" updateStrategy="0" immediately="true">
+                      <Subbinding sourcePath="${idCliente}">
+                        <BindingParameter name="NAME" value="Id Cliente"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Modelo.Cliente.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${idVenda}">
+                        <BindingParameter name="NAME" value="Id Venda"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${dataVendaFormatado}">
+                        <BindingParameter name="NAME" value="Data Venda"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                    </BindingProperty>
                   </BindingProperties>
                 </Component>
               </SubComponents>

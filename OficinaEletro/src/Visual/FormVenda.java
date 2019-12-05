@@ -5,7 +5,6 @@
  */
 package Visual;
 
-import Modelo.Aparelho;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
@@ -35,17 +34,17 @@ public class FormVenda extends javax.swing.JDialog {
 
     public boolean validaCampos() {
 
-        if (!(txtDataVenda.getText().length() > 0)) {
+        if (!(txtDataVenda.getText().length() > 0)) {;
             JOptionPane.showMessageDialog(null, "Informe a data de venda do aparelho");
             txtDataVenda.requestFocus();
             return false;
         }
         
-        if (!(cbxCliente.getSelectedIndex() >= 0)) {
-            JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
-            cbxCliente.requestFocus();
-            return false;
-        }
+        //if (!(cbxCliente.getSelectedIndex() >= 0)) {
+        //    JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
+        //    cbxCliente.requestFocus();
+        //    return false;
+        //}
         
         return true;
     }
@@ -68,9 +67,9 @@ public class FormVenda extends javax.swing.JDialog {
         btnProximoAparelho.setEnabled(!editando);
         btnAnteriorAparelho.setEnabled(!editando);
         btnUltimoAparelho.setEnabled(!editando);
-        txtCodigoVenda.setEnabled(editando);
+        txtCodigoVenda.setEnabled(!editando);
         txtDataVenda.setEditable(editando);
-        cbxCliente.setEnabled(editando);
+        //cbxCliente.setEnabled(editando);
         tblVenda.setEnabled(editando);
     }
     
@@ -94,7 +93,7 @@ public class FormVenda extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Venda>());
+        listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Venda> ( ) );
         listCliente = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Cliente>());
         converteData1 = new Modelo.ConverteData();
         painelNavegacao = new javax.swing.JPanel();
@@ -177,8 +176,16 @@ public class FormVenda extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${idVenda}");
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, eLProperty, tblVenda);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, tblVenda);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idCliente}"));
+        columnBinding.setColumnName("Id Cliente");
+        columnBinding.setColumnClass(Modelo.Cliente.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idVenda}"));
+        columnBinding.setColumnName("Id Venda");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataVendaFormatado}"));
+        columnBinding.setColumnName("Data Venda");
+        columnBinding.setColumnClass(String.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane2.setViewportView(tblVenda);

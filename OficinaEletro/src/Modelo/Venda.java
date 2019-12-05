@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
  *
  * @author 11171010115
  */
-public class Venda {
+public class Venda implements Serializable{
     
     private Integer idVenda;
     private Cliente idCliente;

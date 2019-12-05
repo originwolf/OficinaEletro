@@ -51,13 +51,13 @@ public class DAOVenda {
     }
     
     public boolean incluir(Venda obj){
-        String sql = "Insert into venda(idCliente, dataVenda) values(?,?)";
+        String sql = "Insert into venda (Cliente_idCliente, dataVenda) values (?,?)";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
-            pst.setDate(1, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));
-            pst.setInt(2, obj.getIdCliente().getIdCliente());
+            pst.setInt(1, obj.getIdCliente().getIdCliente());
+            pst.setDate(2, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));
             if(pst.executeUpdate() > 0){
-                JOptionPane.showMessageDialog(null, "Venda cadastrado com sucesso");
+                JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso");
                 return true;
             }else{
                 JOptionPane.showMessageDialog(null, "Venda não cadastrada");
@@ -70,7 +70,7 @@ public class DAOVenda {
     }
     
     public boolean alterar(Venda obj){
-        String sql = "Update venda set Cliente_idCliente=?, dataVenda=? where idAparelho=?";
+        String sql = "Update venda set Cliente_idCliente=?, dataVenda=? where idVenda=?";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             pst.setInt(1, obj.getIdCliente().getIdCliente());
