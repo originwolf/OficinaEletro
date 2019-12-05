@@ -242,7 +242,7 @@ public class FormVenda extends javax.swing.JDialog {
 
         txtCodigoVenda.setEnabled(false);
 
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idAparelho}"), txtCodigoVenda, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idVenda}"), txtCodigoVenda, org.jdesktop.beansbinding.BeanProperty.create("text"));
         bindingGroup.addBinding(binding);
 
         txtCodigoVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -253,7 +253,7 @@ public class FormVenda extends javax.swing.JDialog {
 
         jLabel2.setText("Data de Recebimento:");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataRecebimentoAparelho}"), txtDataVenda, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataVenda}"), txtDataVenda, org.jdesktop.beansbinding.BeanProperty.create("value"));
         binding.setConverter(converteData1);
         bindingGroup.addBinding(binding);
 
