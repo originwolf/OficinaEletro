@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Visual;
 
 import java.util.ArrayList;
@@ -14,7 +9,7 @@ import Modelo.Venda;
 
 /**
  *
- * @author pedri
+ * @author CelsoAugusto
  */
 public class FormVenda extends javax.swing.JDialog {
 
@@ -40,11 +35,11 @@ public class FormVenda extends javax.swing.JDialog {
             return false;
         }
         
-        //if (!(cbxCliente.getSelectedIndex() >= 0)) {
-        //    JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
-        //    cbxCliente.requestFocus();
-        //    return false;
-        //}
+        if (!(cbxCliente.getSelectedIndex() >= 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
+            cbxCliente.requestFocus();
+            return false;
+        }
         
         return true;
     }

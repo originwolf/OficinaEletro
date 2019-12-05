@@ -171,15 +171,19 @@
                   <BindingProperties>
                     <BindingProperty name="elements" source="listaEstoque" target="tblEstoque" targetPath="elements" updateStrategy="0" immediately="true">
                       <Subbinding sourcePath="${idEstoque}">
+                        <BindingParameter name="NAME" value="Id Estoque"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${nomePeca}">
+                        <BindingParameter name="NAME" value="Nome Pe&#xe7;a"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${quantidadePeca}">
+                        <BindingParameter name="NAME" value="Quantidade Pe&#xe7;a"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
                       </Subbinding>
                       <Subbinding sourcePath="${valorPeca}">
+                        <BindingParameter name="NAME" value="Valor Pe&#xe7;a"/>
                         <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Double.class"/>
                       </Subbinding>
                     </BindingProperty>

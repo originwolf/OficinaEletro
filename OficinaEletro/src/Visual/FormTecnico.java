@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Visual;
 
 import Modelo.DAOTecnico;
@@ -12,7 +7,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author pedri
+ * @author Ceila
  */
 public class FormTecnico extends javax.swing.JDialog {
 

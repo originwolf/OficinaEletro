@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Visual;
 
 import Modelo.DAOEstoque;
@@ -12,7 +7,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author pedri
+ * @author Josi
  */
 public class FormEstoque extends javax.swing.JDialog {
 
@@ -176,13 +171,13 @@ public class FormEstoque extends javax.swing.JDialog {
         columnBinding.setColumnName("Id Estoque");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${nomePeca}"));
-        columnBinding.setColumnName("Nome Peca");
+        columnBinding.setColumnName("Nome Peça");
         columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${quantidadePeca}"));
-        columnBinding.setColumnName("Quantidade Peca");
+        columnBinding.setColumnName("Quantidade Peça");
         columnBinding.setColumnClass(Integer.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${valorPeca}"));
-        columnBinding.setColumnName("Valor Peca");
+        columnBinding.setColumnName("Valor Peça");
         columnBinding.setColumnClass(Double.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
