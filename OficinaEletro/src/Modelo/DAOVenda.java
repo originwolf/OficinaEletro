@@ -119,4 +119,22 @@ public class DAOVenda {
        }
        return null;
    }
+    
+    public Venda localizarId(Integer id){
+       String sql = "select dataVenda from venda where idVenda=?";
+       Venda obj = new Venda();
+       try{
+           PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
+           pst.setInt(1, id);
+           ResultSet rs = pst.executeQuery();
+           while(rs.next()){
+               obj.setIdVenda(rs.getInt("idVenda"));
+               pst.setDate(1, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));               
+               return obj;
+           }
+       }catch(SQLException e){
+           JOptionPane.showMessageDialog(null, "Erro de SQL: "+e.getMessage());
+       }
+       return null;
+   }
 }

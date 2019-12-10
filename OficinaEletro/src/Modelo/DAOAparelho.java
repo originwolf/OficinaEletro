@@ -136,4 +136,22 @@ public class DAOAparelho {
        return null;
    }
     
+    public Aparelho localizarId(Integer id){
+       String sql = "select nomeAparelho from aparelho where idAparelho=?";
+       Aparelho obj = new Aparelho();
+       try{
+           PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
+           pst.setInt(1, id);
+           ResultSet rs = pst.executeQuery();
+           while(rs.next()){
+               obj.setIdAparelho(rs.getInt("idAparelho"));
+               obj.setNomeAparelho(rs.getString("nomeAparelho"));             
+               return obj;
+           }
+       }catch(SQLException e){
+           JOptionPane.showMessageDialog(null, "Erro de SQL: "+e.getMessage());
+       }
+       return null;
+   }
+    
 }

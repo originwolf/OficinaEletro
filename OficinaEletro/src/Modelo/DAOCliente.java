@@ -150,4 +150,22 @@ public class DAOCliente {
        return null;
    }
     
+    public Cliente localizarId(Integer id){
+       String sql = "select nomeCliente from cliente where idCliente=?";
+       Cliente obj = new Cliente();
+       try{
+           PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
+           pst.setInt(1, id);
+           ResultSet rs = pst.executeQuery();
+           while(rs.next()){
+               obj.setIdCliente(rs.getInt("idCliente"));
+               obj.setNomeCliente(rs.getString("nomeCliente"));
+               return obj;
+           }
+       }catch(SQLException e){
+           JOptionPane.showMessageDialog(null, "Erro de SQL: "+e.getMessage());
+       }
+       return null;
+   }
+    
 }
