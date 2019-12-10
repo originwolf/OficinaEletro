@@ -32,14 +32,13 @@ public class DAOResumoVenda {
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
                 ResumoVenda obj = new ResumoVenda();
-                obj.setIdResumo(rs.getInt("idResumo"));
                 obj.setIdCliente(daoCliente.localizar(rs.getInt("Cliente_idCliente")));
                 obj.setIdAparelho(daoAparelho.localizar(rs.getInt("Aparelho_idAparelho")));
                 obj.setIdVenda(daoVenda.localizar(rs.getInt("Venda_idVenda")));
                 lista.add(obj);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de SQL list 1 " + ex.getMessage());
         }
         return lista;
     }
