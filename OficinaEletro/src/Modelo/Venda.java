@@ -20,31 +20,6 @@ public class Venda implements Serializable{
         return "Venda{" + "idCliente=" + idCliente + '}';
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.idVenda);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Venda other = (Venda) obj;
-        if (!Objects.equals(this.idVenda, other.idVenda)) {
-            return false;
-        }
-        return true;
-    }
-
     public Venda() {
 
     }
@@ -76,5 +51,30 @@ public class Venda implements Serializable{
     public String getDataVendaFormatado(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         return sdf.format(dataVenda.getTime());
+    }
+    
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.idVenda);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Venda other = (Venda) obj;
+        if (!Objects.equals(this.idVenda, other.idVenda)) {
+            return false;
+        }
+        return true;
     }
 }
