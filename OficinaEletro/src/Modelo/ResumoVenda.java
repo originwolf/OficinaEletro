@@ -14,9 +14,9 @@ import java.util.Objects;
 public class ResumoVenda {
     
     private Integer idResumo;
-    private Aparelho nomeAparelho;
-    private Cliente nomeCliente;
-    private Venda dataVenda;
+    private Aparelho idAparelho;
+    private Cliente idCliente;
+    private Venda idVenda;
     
     public ResumoVenda() {
         
@@ -30,28 +30,28 @@ public class ResumoVenda {
         this.idResumo = idResumo;
     }
 
-    public Aparelho getNomeAparelho() {
-        return nomeAparelho;
+    public Aparelho getIdAparelho() {
+        return idAparelho;
     }
 
-    public void setNomeAparelho(Aparelho nomeAparelho) {
-        this.nomeAparelho = nomeAparelho;
+    public void setIdAparelho(Aparelho nomeAparelho) {
+        this.idAparelho = nomeAparelho;
     }
 
-    public Cliente getNomeCliente() {
-        return nomeCliente;
+    public Cliente getIdCliente() {
+        return idCliente;
     }
 
-    public void setNomeCliente(Cliente nomeCliente) {
-        this.nomeCliente = nomeCliente;
+    public void setIdCliente(Cliente nomeCliente) {
+        this.idCliente = nomeCliente;
     }
 
-    public Venda getDataVenda() {
-        return dataVenda;
+    public Venda getIdVenda() {
+        return idVenda;
     }
 
-    public void setDataVenda(Venda dataVenda) {
-        this.dataVenda = dataVenda;
+    public void setIdVenda(Venda dataVenda) {
+        this.idVenda = idVenda;
     }
     
     @Override
