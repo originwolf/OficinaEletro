@@ -3,27 +3,27 @@ package Visual;
 import Modelo.Aparelho;
 import java.util.ArrayList;
 import Modelo.Cliente;
+import Modelo.Conserto;
 import Modelo.DAOAparelho;
 import Modelo.DAOCliente;
-import Modelo.DAOResumoVenda;
+import Modelo.DAOConserto;
 import Modelo.DAOVenda;
-import Modelo.ResumoVenda;
 import Modelo.Venda;
 
 /**
  *
  * @author CelsoAugusto
  */
-public class FormResumoVenda extends javax.swing.JDialog {
+public class FormConserto extends javax.swing.JDialog {
 
     DAOCliente daoCliente = new DAOCliente();
     DAOVenda daoVenda = new DAOVenda();
     DAOAparelho daoAparelho = new DAOAparelho();
-    DAOResumoVenda daoResumo = new DAOResumoVenda();
+    DAOConserto daoConserto = new DAOConserto();
     /**
      * Creates new form FormAparelho
      */
-    public FormResumoVenda(java.awt.Frame parent, boolean modal) {
+    public FormConserto(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         atualizaTabela();
@@ -36,9 +36,9 @@ public class FormResumoVenda extends javax.swing.JDialog {
     }
     
     public void atualizaTabela() {
-        listResumo.clear();
-        listResumo.addAll(daoResumo.getLista());
-        int linha = listResumo.size() - 1;
+        listConserto.clear();
+        listConserto.addAll(daoConserto.getLista());
+        int linha = listConserto.size() - 1;
         if (linha >= 0) {
             tblResumoVenda.setRowSelectionInterval(linha, linha);
             tblResumoVenda.scrollRectToVisible(tblResumoVenda.getCellRect(linha, linha, true));
@@ -55,7 +55,7 @@ public class FormResumoVenda extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listResumo =  org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList <ResumoVenda>());
+        listConserto = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Conserto>());
         listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Venda> ( ) );
         listCliente = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Cliente>());
         listAparelho = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Aparelho>());
@@ -72,7 +72,7 @@ public class FormResumoVenda extends javax.swing.JDialog {
         tblResumoVenda = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Cadastro de Aparelhos");
+        setTitle("Visualizador de Vendas");
 
         painelNavegacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Navegação"));
         painelNavegacao.setLayout(new java.awt.GridLayout(1, 0));
@@ -119,7 +119,7 @@ public class FormResumoVenda extends javax.swing.JDialog {
 
         abaListagem.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listResumo, tblResumoVenda);
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listConserto, tblResumoVenda);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(tblResumoVenda);
@@ -210,14 +210,18 @@ public class FormResumoVenda extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormResumoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormConserto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormResumoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormConserto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormResumoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormConserto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormResumoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormConserto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -226,7 +230,7 @@ public class FormResumoVenda extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                FormResumoVenda dialog = new FormResumoVenda(new javax.swing.JFrame(), true);
+                FormConserto dialog = new FormConserto(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -250,7 +254,7 @@ public class FormResumoVenda extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private java.util.List<Aparelho> listAparelho;
     private java.util.List<Cliente> listCliente;
-    private java.util.List<ResumoVenda> listResumo;
+    private java.util.List<Conserto> listConserto;
     private java.util.List<Venda> listVenda;
     private javax.swing.JPanel painelNavegacao;
     private javax.swing.JTable tblResumoVenda;

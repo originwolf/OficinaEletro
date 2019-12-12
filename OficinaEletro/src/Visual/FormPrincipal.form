@@ -128,7 +128,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnTecnico" min="-2" pref="177" max="-2" attributes="0"/>
-                              <Component id="btnResumoVenda" min="-2" pref="177" max="-2" attributes="0"/>
+                              <Component id="btnConserto" min="-2" pref="177" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                       </Group>
@@ -152,7 +152,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btnVenda" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
-                      <Component id="btnResumoVenda" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
+                      <Component id="btnConserto" alignment="3" min="-2" pref="67" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
@@ -245,7 +245,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEstoqueActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnResumoVenda">
+        <Component class="javax.swing.JButton" name="btnConserto">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="40" green="40" id="darkGray" palette="1" red="40" type="palette"/>
@@ -259,7 +259,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnResumoVendaActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConsertoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

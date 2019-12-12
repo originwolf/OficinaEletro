@@ -17,41 +17,45 @@ import javax.swing.JOptionPane;
  *
  * @author pedro.martins
  */
-public class DAOResumoVenda {
+public class DAOConserto {
     
-    DAOCliente daoCliente = new DAOCliente();
+    DAOTecnico daoTecnico = new DAOTecnico();
     DAOAparelho daoAparelho = new DAOAparelho();
-    DAOVenda daoVenda = new DAOVenda();
     
-    public List<ResumoVenda> getLista() {
-        String sql = "select * from resumo";
-        List<ResumoVenda> lista = new ArrayList<>();
+    public List<Conserto> getLista() {
+        String sql = "select * from conserto";
+        List<Conserto> lista = new ArrayList<>();
         try {
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
-                ResumoVenda obj = new ResumoVenda();
-                obj.setIdCliente(daoCliente.localizarId(rs.getInt("Cliente_idCliente")));
+                Conserto obj = new Conserto();
+                obj.setIdConserto(rs.getInt("idConserto"));
+                obj.setPrecoConserto(rs.getDouble("precoConserto"));
+                java.sql.Date dt = rs.getDate("dataConserto");
+                Calendar c = Calendar.getInstance();
+                c.setTime(dt);
+                obj.setDataConserto(c);
+                obj.setIdTecnico(daoTecnico.localizar(rs.getInt("Tecnico_idTecnico")));
                 obj.setIdAparelho(daoAparelho.localizarId(rs.getInt("Aparelho_idAparelho")));
-                obj.setIdVenda(daoVenda.localizarId(rs.getInt("Venda_idVenda")));
                 lista.add(obj);
             }
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro de SQL in DAO Locate: " + ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de SQL in DAO LIST: " + ex.getMessage());
         }
         return lista;
     }
     
-    public ResumoVenda localizar(Integer id){
-       String sql = "select * from resumo where idResumo=?";
-       ResumoVenda obj = new ResumoVenda();
+    public Conserto localizar(Integer id){
+       String sql = "select * from conserto where idConserto=?";
+       Conserto obj = new Conserto();
        try{
            PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
            pst.setInt(1, id);
            ResultSet rs = pst.executeQuery();
            while(rs.next()){
-               obj.setIdResumo(rs.getInt("idResumo"));              
+               obj.setIdConserto(rs.getInt("idConserto"));              
                return obj;
            }
        }catch(SQLException e){

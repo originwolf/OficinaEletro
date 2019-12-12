@@ -30,7 +30,7 @@ public class FormPrincipal extends javax.swing.JFrame {
         btnVenda = new javax.swing.JButton();
         btnTecnico = new javax.swing.JButton();
         btnEstoque = new javax.swing.JButton();
-        btnResumoVenda = new javax.swing.JButton();
+        btnConserto = new javax.swing.JButton();
         barraMenu = new javax.swing.JMenuBar();
         menuCadastro = new javax.swing.JMenu();
         menuAparelho = new javax.swing.JMenuItem();
@@ -96,13 +96,13 @@ public class FormPrincipal extends javax.swing.JFrame {
             }
         });
 
-        btnResumoVenda.setBackground(java.awt.Color.darkGray);
-        btnResumoVenda.setForeground(new java.awt.Color(255, 255, 255));
-        btnResumoVenda.setText("Resumo de Vendas");
-        btnResumoVenda.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnResumoVenda.addActionListener(new java.awt.event.ActionListener() {
+        btnConserto.setBackground(java.awt.Color.darkGray);
+        btnConserto.setForeground(new java.awt.Color(255, 255, 255));
+        btnConserto.setText("Resumo de Vendas");
+        btnConserto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnConserto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResumoVendaActionPerformed(evt);
+                btnConsertoActionPerformed(evt);
             }
         });
 
@@ -125,7 +125,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnResumoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnConserto, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(1, 1, 1)))
                 .addContainerGap())
         );
@@ -142,7 +142,7 @@ public class FormPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnResumoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnConserto, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
 
@@ -298,14 +298,14 @@ public class FormPrincipal extends javax.swing.JFrame {
         form.setVisible(true);
     }//GEN-LAST:event_btnEstoqueActionPerformed
 
-    private void btnResumoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResumoVendaActionPerformed
+    private void btnConsertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsertoActionPerformed
         // TODO add your handling code here:
-        FormResumoVenda form = new FormResumoVenda(this,true);
+        FormConserto form = new FormConserto(this,true);
         form.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);//não deixa fechar a janela pelo x
         form.setLocationRelativeTo(null); // centralizar a janela
         form.setResizable(true); // retirar o botão de maximizar
         form.setVisible(true);
-    }//GEN-LAST:event_btnResumoVendaActionPerformed
+    }//GEN-LAST:event_btnConsertoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,8 +351,8 @@ public class FormPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnAparelho;
     private javax.swing.JButton btnCliente;
+    private javax.swing.JButton btnConserto;
     private javax.swing.JButton btnEstoque;
-    private javax.swing.JButton btnResumoVenda;
     private javax.swing.JButton btnTecnico;
     private javax.swing.JButton btnVenda;
     private javax.swing.JPanel jPanel1;
