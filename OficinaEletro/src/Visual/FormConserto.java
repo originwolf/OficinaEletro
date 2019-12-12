@@ -34,35 +34,31 @@ public class FormConserto extends javax.swing.JDialog {
     }
     
     public boolean validaCampos() {
-        if (!(txtNomeAparelho.getText().length() > 0)) {
-            JOptionPane.showMessageDialog(null, "Informe o nome do aparelho");
-            txtNomeAparelho.requestFocus();
-            return false;
-        }
         
-        if (!(txtMarcaAparelho.getText().length() > 0)) {
-            JOptionPane.showMessageDialog(null, "Informe a marca do aparelho");
-            txtMarcaAparelho.requestFocus();
+        if (!(txtPrecoConserto.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o preço do conserto");
+            txtPrecoConserto.requestFocus();
             return false;
         }
 
-        if (!(txtDataRecebimento.getText().length() > 0)) {
-            JOptionPane.showMessageDialog(null, "Informe a data de recebimento do aparelho");
-            txtDataRecebimento.requestFocus();
+        if (!(txtDataConserto.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "Informe a data de conserto");
+            txtDataConserto.requestFocus();
             return false;
         }
         
-        if (!(txtDataGarantia.getText().length() > 0)) {
-            JOptionPane.showMessageDialog(null, "Informe a data de garantia do aparelho");
-            txtDataGarantia.requestFocus();
+        if (!(cbxTecnico.getSelectedIndex() >= 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o técnico");
+            cbxTecnico.requestFocus();
             return false;
         }
         
-        if (!(cbxCliente.getSelectedIndex() >= 0)) {
-            JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
-            cbxCliente.requestFocus();
+        if (!(cbxAparelho.getSelectedIndex() >= 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o aparelho");
+            cbxAparelho.requestFocus();
             return false;
         }
+        
         return true;
     }
     
@@ -70,14 +66,12 @@ public class FormConserto extends javax.swing.JDialog {
         btnCancelarAparelho.setEnabled(editando);
         btnSalvarAparelho.setEnabled(editando);
         btnEditarAparelho.setEnabled(!editando);
-        int linha = listAparelhos.size() - 1;
+        int linha = listConserto.size() - 1;
         if (linha < 0) {
             btnExcluirAparelho.setEnabled(false);
-            txtCodigoAparelhos.setText("");
-            txtNomeAparelhos.setText("");
-            txtMarcaAparelhos.setText("");
-            txtDataRecebimento.setText("");
-            txtDataGarantia.setText("");
+            txtCodigoVenda.setText("");
+            txtPrecoConserto.setText("");
+            txtDataConserto.setText("");
         } else {
             btnExcluirAparelho.setEnabled(!editando);
         }
@@ -88,12 +82,9 @@ public class FormConserto extends javax.swing.JDialog {
         btnProximoAparelho.setEnabled(!editando);
         btnAnteriorAparelho.setEnabled(!editando);
         btnUltimoAparelho.setEnabled(!editando);
-        txtNomeAparelhos.setEnabled(editando);
-        txtMarcaAparelhos.setEnabled(editando);
-        txtDataRecebimento.setEditable(editando);
-        txtDataGarantia.setEditable(editando);
-        cbxCliente.setEnabled(editando);
-        tblAparelho.setEnabled(editando);
+        txtCodigoVenda.setEnabled(!editando);
+        txtPrecoConserto.setEnabled(editando);
+        txtDataConserto.setEditable(editando);
     }
     
     public void atualizaTabela() {
@@ -230,7 +221,7 @@ public class FormConserto extends javax.swing.JDialog {
         abas.addTab("Listagem", abaListagem);
 
         painelAcaoAparelho.setBorder(javax.swing.BorderFactory.createTitledBorder("Ações"));
-        painelAcaoAparelho.setLayout(new java.awt.GridLayout());
+        painelAcaoAparelho.setLayout(new java.awt.GridLayout(1, 0));
 
         btnNovoAparelho.setText("Novo");
         btnNovoAparelho.addActionListener(new java.awt.event.ActionListener() {
@@ -285,6 +276,9 @@ public class FormConserto extends javax.swing.JDialog {
 
         jLabel3.setText("Técnico:");
 
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listTecnico, cbxTecnico);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         txtPrecoConserto.setEnabled(false);
         txtPrecoConserto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -293,6 +287,9 @@ public class FormConserto extends javax.swing.JDialog {
         });
 
         txtCodigoAparelhos1.setText("Preço:");
+
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listAparelho, cbxAparelho);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jLabel4.setText("Aparelho:");
 
@@ -361,7 +358,7 @@ public class FormConserto extends javax.swing.JDialog {
             .addComponent(painelNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+                .addComponent(abas)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -443,9 +440,9 @@ public class FormConserto extends javax.swing.JDialog {
     private void btnSalvarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAparelhoActionPerformed
         // TODO add your handling code here:
         if(validaCampos()){
-            int linhaSelecionada = tblVenda.getSelectedRow();
-            Venda obj = listConserto.get(linhaSelecionada);
-            daoVenda.salvar(obj);
+            int linhaSelecionada = tblResumoVenda.getSelectedRow();
+            Conserto obj = listConserto.get(linhaSelecionada);
+            daoConserto.salvar(obj);
             atualizaTabela();
             trataEdicao(false);
         }
@@ -457,9 +454,9 @@ public class FormConserto extends javax.swing.JDialog {
             "Pergunta",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
             null, new String [] {"Sim","Não"},"Sim");
         if(opcao==0){
-            int linhaSelecionada = tblVenda.getSelectedRow();
-            Venda obj = listConserto.get(linhaSelecionada);
-            daoVenda.remover(obj);
+            int linhaSelecionada = tblResumoVenda.getSelectedRow();
+            Conserto obj = listConserto.get(linhaSelecionada);
+            daoConserto.remover(obj);
             atualizaTabela();
             trataEdicao(false);
         }

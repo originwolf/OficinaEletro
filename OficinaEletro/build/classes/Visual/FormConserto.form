@@ -55,7 +55,7 @@
           <Component id="painelNavegacao" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="abas" pref="553" max="32767" attributes="0"/>
+              <Component id="abas" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -388,6 +388,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbxTecnico">
+              <BindingProperties>
+                <BindingProperty name="elements" source="listTecnico" target="cbxTecnico" targetPath="elements" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -409,6 +412,9 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbxAparelho">
+              <BindingProperties>
+                <BindingProperty name="elements" source="listAparelho" target="cbxAparelho" targetPath="elements" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>

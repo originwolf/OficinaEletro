@@ -59,10 +59,10 @@ public class DAOConserto {
             pst.setInt(3, obj.getIdTecnico().getIdTecnico());
             pst.setInt(4, obj.getIdAparelho().getIdAparelho());
             if(pst.executeUpdate() > 0){
-                JOptionPane.showMessageDialog(null, "Aparelho cadastrado com sucesso");
+                JOptionPane.showMessageDialog(null, "Conserto cadastrado com sucesso");
                 return true;
             }else{
-                JOptionPane.showMessageDialog(null, "Aparelho não cadastrado");
+                JOptionPane.showMessageDialog(null, "Conserto não cadastrado");
                 return false;
             }
         }catch(SQLException e){
@@ -79,6 +79,7 @@ public class DAOConserto {
             pst.setDate(2, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
             pst.setInt(3, obj.getIdTecnico().getIdTecnico());
             pst.setInt(4, obj.getIdAparelho().getIdAparelho());
+            pst.setInt(5, obj.getIdConserto());
             if(pst.executeUpdate()>0){
                 JOptionPane.showMessageDialog(null, "Conserto alterado com sucesso");
                 return true;
