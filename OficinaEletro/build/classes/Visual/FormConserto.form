@@ -8,10 +8,10 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Conserto&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="java.util.List" name="listVenda">
+    <Component class="java.util.List" name="listTecnico">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList&lt;Venda&gt; ( ) )"/>
-        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Venda&gt;"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList&lt;Tecnico&gt; ( ) )"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Tecnico&gt;"/>
       </AuxValues>
     </Component>
     <Component class="java.util.List" name="listCliente">
@@ -55,7 +55,7 @@
           <Component id="painelNavegacao" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="abas" pref="493" max="32767" attributes="0"/>
+              <Component id="abas" pref="553" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -65,7 +65,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="painelNavegacao" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="abas" pref="252" max="32767" attributes="0"/>
+              <Component id="abas" pref="284" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -158,14 +158,61 @@
                 <Component class="javax.swing.JTable" name="tblResumoVenda">
                   <Properties>
                     <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                      <TableColumnModel selectionModel="0"/>
+                      <TableColumnModel selectionModel="0">
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                        <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                          <Title/>
+                          <Editor/>
+                          <Renderer/>
+                        </Column>
+                      </TableColumnModel>
                     </Property>
                     <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="elements" source="listConserto" target="tblResumoVenda" targetPath="elements" updateStrategy="0" immediately="true"/>
+                    <BindingProperty name="elements" source="listConserto" target="tblResumoVenda" targetPath="elements" updateStrategy="0" immediately="true">
+                      <Subbinding sourcePath="${idConserto}">
+                        <BindingParameter name="NAME" value="Id Conserto"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Integer.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${precoConserto}">
+                        <BindingParameter name="NAME" value="Preco Conserto"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Double.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${dataConsertoFormatado}">
+                        <BindingParameter name="NAME" value="Data do conserto"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${idTecnico}">
+                        <BindingParameter name="NAME" value="Tecnico respons&#xe1;vel"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Modelo.Tecnico.class"/>
+                      </Subbinding>
+                      <Subbinding sourcePath="${idAparelho}">
+                        <BindingParameter name="NAME" value="Id Aparelho"/>
+                        <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="Modelo.Aparelho.class"/>
+                      </Subbinding>
+                    </BindingProperty>
                   </BindingProperties>
                 </Component>
               </SubComponents>

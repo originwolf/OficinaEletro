@@ -6,6 +6,7 @@
 package Modelo;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -63,6 +64,11 @@ public class Conserto {
 
     public void setIdAparelho(Aparelho idAparelho) {
         this.idAparelho = idAparelho;
+    }
+    
+    public String getDataConsertoFormatado(){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        return sdf.format(DataConserto.getTime());
     }
     
     @Override

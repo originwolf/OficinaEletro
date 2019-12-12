@@ -29,7 +29,7 @@ public class DAOConserto {
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
-                Calendar cal = Calendar.getInstance();
+                //Calendar cal = Calendar.getInstance();
                 Conserto obj = new Conserto();
                 obj.setIdConserto(rs.getInt("idConserto"));
                 obj.setPrecoConserto(rs.getDouble("precoConserto"));
@@ -38,7 +38,7 @@ public class DAOConserto {
                 c.setTime(dt);
                 obj.setDataConserto(c);
                 obj.setIdTecnico(daoTecnico.localizar(rs.getInt("Tecnico_idTecnico")));
-                obj.setIdAparelho(daoAparelho.localizarId(rs.getInt("Aparelho_idAparelho")));
+                obj.setIdAparelho(daoAparelho.localizar(rs.getInt("Aparelho_idAparelho")));
                 lista.add(obj);
             }
         } catch (SQLException ex) {
@@ -55,11 +55,13 @@ public class DAOConserto {
            pst.setInt(1, id);
            ResultSet rs = pst.executeQuery();
            while(rs.next()){
-               obj.setIdConserto(rs.getInt("idConserto"));              
+               obj.setIdConserto(rs.getInt("idConserto"));
+               obj.setPrecoConserto(rs.getDouble("precoConserto"));
+               pst.setDate(1, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
                return obj;
            }
        }catch(SQLException e){
-           JOptionPane.showMessageDialog(null, "Erro de SQL: "+e.getMessage());
+           JOptionPane.showMessageDialog(null, "Erro de SQL: on dao locate "+e.getMessage());
        }
        return null;
    }

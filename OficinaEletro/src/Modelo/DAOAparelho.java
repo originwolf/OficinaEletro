@@ -126,8 +126,8 @@ public class DAOAparelho {
                obj.setIdAparelho(rs.getInt("idAparelho"));
                obj.setNomeAparelho(rs.getString("nomeAparelho"));
                obj.setMarcaAparelho(rs.getString("marcaAparelho"));
-               pst.setDate(1, new java.sql.Date(obj.getDataGarantia().getTimeInMillis()));
-               pst.setDate(2, new java.sql.Date(obj.getDataRecebimentoAparelho().getTimeInMillis()));               
+               //pst.setDate(1, new java.sql.Date(obj.getDataGarantia().getTimeInMillis()));
+               //pst.setDate(2, new java.sql.Date(obj.getDataRecebimentoAparelho().getTimeInMillis()));               
                return obj;
            }
        }catch(SQLException e){

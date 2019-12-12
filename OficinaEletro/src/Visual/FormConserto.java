@@ -7,8 +7,8 @@ import Modelo.Conserto;
 import Modelo.DAOAparelho;
 import Modelo.DAOCliente;
 import Modelo.DAOConserto;
-import Modelo.DAOVenda;
-import Modelo.Venda;
+import Modelo.DAOTecnico;
+import Modelo.Tecnico;
 
 /**
  *
@@ -16,8 +16,7 @@ import Modelo.Venda;
  */
 public class FormConserto extends javax.swing.JDialog {
 
-    DAOCliente daoCliente = new DAOCliente();
-    DAOVenda daoVenda = new DAOVenda();
+    DAOTecnico daoTecnico = new DAOTecnico();
     DAOAparelho daoAparelho = new DAOAparelho();
     DAOConserto daoConserto = new DAOConserto();
     /**
@@ -27,12 +26,10 @@ public class FormConserto extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         atualizaTabela();
-        listCliente.clear();
-        listCliente.addAll(daoCliente.getLista());
         listAparelho.clear();
         listAparelho.addAll(daoAparelho.getLista());
-        listVenda.clear();
-        listVenda.addAll(daoVenda.getLista());
+        listTecnico.clear();
+        listTecnico.addAll(daoTecnico.getLista());
     }
     
     public void atualizaTabela() {
@@ -56,7 +53,7 @@ public class FormConserto extends javax.swing.JDialog {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         listConserto = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Conserto>());
-        listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Venda> ( ) );
+        listTecnico = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Tecnico> ( ) );
         listCliente = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Cliente>());
         listAparelho = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Aparelho>());
         converteData1 = new Modelo.ConverteData();
@@ -120,6 +117,21 @@ public class FormConserto extends javax.swing.JDialog {
         abaListagem.setLayout(new java.awt.BorderLayout());
 
         org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listConserto, tblResumoVenda);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idConserto}"));
+        columnBinding.setColumnName("Id Conserto");
+        columnBinding.setColumnClass(Integer.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${precoConserto}"));
+        columnBinding.setColumnName("Preco Conserto");
+        columnBinding.setColumnClass(Double.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataConsertoFormatado}"));
+        columnBinding.setColumnName("Data do conserto");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idTecnico}"));
+        columnBinding.setColumnName("Tecnico responsável");
+        columnBinding.setColumnClass(Modelo.Tecnico.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idAparelho}"));
+        columnBinding.setColumnName("Id Aparelho");
+        columnBinding.setColumnClass(Modelo.Aparelho.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane1.setViewportView(tblResumoVenda);
@@ -135,7 +147,7 @@ public class FormConserto extends javax.swing.JDialog {
             .addComponent(painelNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 493, Short.MAX_VALUE)
+                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -143,7 +155,7 @@ public class FormConserto extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(abas, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -255,7 +267,7 @@ public class FormConserto extends javax.swing.JDialog {
     private java.util.List<Aparelho> listAparelho;
     private java.util.List<Cliente> listCliente;
     private java.util.List<Conserto> listConserto;
-    private java.util.List<Venda> listVenda;
+    private java.util.List<Tecnico> listTecnico;
     private javax.swing.JPanel painelNavegacao;
     private javax.swing.JTable tblResumoVenda;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
