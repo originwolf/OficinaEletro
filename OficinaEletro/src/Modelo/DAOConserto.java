@@ -43,7 +43,7 @@ public class DAOConserto {
     }
     
     public boolean salvar(Conserto obj) {
-        if (obj.getIdAparelho() == null) {
+        if (obj.getIdConserto() == null) {
             return incluir(obj);
         }else{
             return alterar(obj);
@@ -54,7 +54,7 @@ public class DAOConserto {
         String sql = "Insert into conserto(precoConserto,dataConserto,Tecnico_idTecnico,Aparelho_idAparelho) values(?,?,?,?)";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
-            pst.setDouble(1,obj.getPrecoConserto());
+            pst.setDouble(1, obj.getPrecoConserto());
             pst.setDate(2, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
             pst.setInt(3, obj.getIdTecnico().getIdTecnico());
             pst.setInt(4, obj.getIdAparelho().getIdAparelho());
@@ -66,7 +66,7 @@ public class DAOConserto {
                 return false;
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Erro de SQL: "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro de SQL na inclusão: "+e.getMessage());
             return false;
         }
     }
