@@ -1,10 +1,13 @@
 package Visual;
 
+import Modelo.Aparelho;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import Modelo.Cliente;
-import Modelo.DAOCliente;
+import Modelo.DAOAparelho;
+import Modelo.DAOTecnico;
 import Modelo.DAOVenda;
+import Modelo.Tecnico;
 import Modelo.Venda;
 
 /**
@@ -14,7 +17,8 @@ import Modelo.Venda;
 public class FormVenda extends javax.swing.JDialog {
 
     DAOVenda daoVenda = new DAOVenda();
-    DAOCliente daoCliente = new DAOCliente();
+    DAOAparelho daoAparelho = new DAOAparelho();
+    DAOTecnico daoTecnico = new DAOTecnico();
     /**
      * Creates new form FormAparelho
      */
@@ -23,21 +27,35 @@ public class FormVenda extends javax.swing.JDialog {
         initComponents();
         atualizaTabela();
         trataEdicao(false);
-        listCliente.clear();
-        listCliente.addAll(daoCliente.getLista());
+        listTecnico.clear();
+        listTecnico.addAll(daoTecnico.getLista());
+        listAparelho.clear();
+        listAparelho.addAll(daoAparelho.getLista());
     }
 
     public boolean validaCampos() {
 
-        if (!(txtDataVenda.getText().length() > 0)) {;
-            JOptionPane.showMessageDialog(null, "Informe a data de venda do aparelho");
-            txtDataVenda.requestFocus();
+        if (!(txtDataConserto.getText().length() > 0)) {;
+            JOptionPane.showMessageDialog(null, "Informe a data do conserto");
+            txtDataConserto.requestFocus();
             return false;
         }
         
-        if (!(cbxCliente.getSelectedIndex() >= 0)) {
-            JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
-            cbxCliente.requestFocus();
+        if (!(txtPrecoConserto.getText().length() > 0)) {;
+            JOptionPane.showMessageDialog(null, "Informe o valor do conserto");
+            txtPrecoConserto.requestFocus();
+            return false;
+        }
+        
+        if (!(cbxTecnico.getSelectedIndex() >= 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o técnico responsável");
+            cbxTecnico.requestFocus();
+            return false;
+        }
+        
+        if (!(cbxAparelho.getSelectedIndex() >= 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o nome do aparelho");
+            cbxTecnico.requestFocus();
             return false;
         }
         
@@ -48,10 +66,10 @@ public class FormVenda extends javax.swing.JDialog {
         btnCancelarAparelho.setEnabled(editando);
         btnSalvarAparelho.setEnabled(editando);
         btnEditarAparelho.setEnabled(!editando);
-        int linha = listVenda.size() - 1;
+        int linha = listConserto.size() - 1;
         if (linha < 0) {
             btnExcluirAparelho.setEnabled(false);
-            txtDataVenda.setText("");
+            txtDataConserto.setText("");
         } else {
             btnExcluirAparelho.setEnabled(!editando);
         }
@@ -63,15 +81,16 @@ public class FormVenda extends javax.swing.JDialog {
         btnAnteriorAparelho.setEnabled(!editando);
         btnUltimoAparelho.setEnabled(!editando);
         txtCodigoVenda.setEnabled(!editando);
-        txtDataVenda.setEditable(editando);
-        //cbxCliente.setEnabled(editando);
+        txtDataConserto.setEditable(editando);
+        cbxTecnico.setEnabled(editando);
+        cbxAparelho.setEnabled(editando);
         tblVenda.setEnabled(editando);
     }
     
     public void atualizaTabela() {
-        listVenda.clear();
-        listVenda.addAll(daoVenda.getLista());
-        int linha = listVenda.size() - 1;
+        listConserto.clear();
+        listConserto.addAll(daoVenda.getLista());
+        int linha = listConserto.size() - 1;
         if (linha >= 0) {
             tblVenda.setRowSelectionInterval(linha, linha);
             tblVenda.scrollRectToVisible(tblVenda.getCellRect(linha, linha, true));
@@ -88,8 +107,9 @@ public class FormVenda extends javax.swing.JDialog {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        listVenda = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Venda> ( ) );
-        listCliente = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Cliente>());
+        listConserto = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Conserto> ( ) );
+        listTecnico = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Tecnico>());
+        listAparelho = org.jdesktop.observablecollections.ObservableCollections.observableList(new ArrayList<Aparelho>());
         converteData1 = new Modelo.ConverteData();
         painelNavegacao = new javax.swing.JPanel();
         btnPrimeiroAparelho = new javax.swing.JButton();
@@ -119,9 +139,13 @@ public class FormVenda extends javax.swing.JDialog {
         }catch(Exception e){
 
         }
-        txtDataVenda = new javax.swing.JFormattedTextField(maskData);
+        txtDataConserto = new javax.swing.JFormattedTextField(maskData);
         jLabel3 = new javax.swing.JLabel();
-        cbxCliente = new javax.swing.JComboBox<>();
+        cbxTecnico = new javax.swing.JComboBox<>();
+        txtPrecoConserto = new javax.swing.JTextField();
+        txtCodigoAparelhos1 = new javax.swing.JLabel();
+        cbxAparelho = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Vendas");
@@ -171,16 +195,22 @@ public class FormVenda extends javax.swing.JDialog {
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
-        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listVenda, tblVenda);
-        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idCliente}"));
-        columnBinding.setColumnName("Id Cliente");
-        columnBinding.setColumnClass(Modelo.Cliente.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idVenda}"));
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listConserto, tblVenda);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idVenda}"));
         columnBinding.setColumnName("Id Venda");
         columnBinding.setColumnClass(Integer.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataVendaFormatado}"));
-        columnBinding.setColumnName("Data Venda");
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${precoConserto}"));
+        columnBinding.setColumnName("Preco Conserto");
+        columnBinding.setColumnClass(Double.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataConsertoFormatado}"));
+        columnBinding.setColumnName("Data Conserto Formatado");
         columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idTecnico}"));
+        columnBinding.setColumnName("Id Tecnico");
+        columnBinding.setColumnClass(Modelo.Tecnico.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idAparelho}"));
+        columnBinding.setColumnName("Id Aparelho");
+        columnBinding.setColumnClass(Modelo.Aparelho.class);
         bindingGroup.addBinding(jTableBinding);
         jTableBinding.bind();
         jScrollPane2.setViewportView(tblVenda);
@@ -248,46 +278,60 @@ public class FormVenda extends javax.swing.JDialog {
 
         jLabel2.setText("Data de Recebimento:");
 
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataVenda}"), txtDataVenda, org.jdesktop.beansbinding.BeanProperty.create("value"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.dataVenda}"), txtDataConserto, org.jdesktop.beansbinding.BeanProperty.create("value"));
         binding.setConverter(converteData1);
         bindingGroup.addBinding(binding);
 
-        jLabel3.setText("Cliente:");
+        jLabel3.setText("Técnico:");
 
-        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listCliente, cbxCliente);
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listTecnico, cbxTecnico);
         bindingGroup.addBinding(jComboBoxBinding);
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idCliente}"), cbxCliente, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idCliente}"), cbxTecnico, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
         bindingGroup.addBinding(binding);
+
+        txtPrecoConserto.setEnabled(false);
+        txtPrecoConserto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecoConsertoActionPerformed(evt);
+            }
+        });
+
+        txtCodigoAparelhos1.setLabelFor(abaDados);
+        txtCodigoAparelhos1.setText("Preço:");
+
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listAparelho, cbxAparelho);
+        bindingGroup.addBinding(jComboBoxBinding);
+
+        jLabel4.setText("Aparelho:");
 
         javax.swing.GroupLayout painelDadosAparelhoLayout = new javax.swing.GroupLayout(painelDadosAparelho);
         painelDadosAparelho.setLayout(painelDadosAparelhoLayout);
         painelDadosAparelhoLayout.setHorizontalGroup(
             painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(painelAcaoAparelho, javax.swing.GroupLayout.DEFAULT_SIZE, 453, Short.MAX_VALUE)
-                            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtDataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                                .addComponent(txtCodigoAparelhos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCodigoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(painelAcaoAparelho, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                        .addComponent(txtCodigoAparelhos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCodigoAparelhos1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPrecoConserto)
+                            .addComponent(txtDataConserto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         painelDadosAparelhoLayout.setVerticalGroup(
             painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -299,13 +343,21 @@ public class FormVenda extends javax.swing.JDialog {
                     .addComponent(txtCodigoAparelhos))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPrecoConserto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoAparelhos1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtDataVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(txtDataConserto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbxTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cbxAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
         );
 
         abaDados.addTab("Dados", painelDadosAparelho);
@@ -317,16 +369,16 @@ public class FormVenda extends javax.swing.JDialog {
             .addComponent(painelNavegacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(abaDados, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(abaDados)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(painelNavegacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(abaDados, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addComponent(abaDados, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -341,10 +393,10 @@ public class FormVenda extends javax.swing.JDialog {
 
     private void btnNovoAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoAparelhoActionPerformed
         // TODO add your handling code here:
-        listVenda.add((Venda) new Venda());
-        int linha = listVenda.size() -1;
+        listConserto.add((Venda) new Venda());
+        int linha = listConserto.size() -1;
         tblVenda.setRowSelectionInterval(linha, linha);
-        txtDataVenda.requestFocus();
+        txtDataConserto.requestFocus();
         trataEdicao(true);
     }//GEN-LAST:event_btnNovoAparelhoActionPerformed
 
@@ -352,7 +404,7 @@ public class FormVenda extends javax.swing.JDialog {
         // TODO add your handling code here:
         if(validaCampos()){
             int linhaSelecionada = tblVenda.getSelectedRow(); 
-            Venda obj = listVenda.get(linhaSelecionada);
+            Venda obj = listConserto.get(linhaSelecionada);
             daoVenda.salvar(obj); 
             atualizaTabela();
             trataEdicao(false);
@@ -362,7 +414,7 @@ public class FormVenda extends javax.swing.JDialog {
     private void btnEditarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAparelhoActionPerformed
         // TODO add your handling code here:
         trataEdicao(true);
-        txtDataVenda.requestFocus();
+        txtDataConserto.requestFocus();
     }//GEN-LAST:event_btnEditarAparelhoActionPerformed
 
     private void btnCancelarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAparelhoActionPerformed
@@ -378,7 +430,7 @@ public class FormVenda extends javax.swing.JDialog {
                  null, new String [] {"Sim","Não"},"Sim");     
          if(opcao==0){    
              int linhaSelecionada = tblVenda.getSelectedRow();         
-             Venda obj = listVenda.get(linhaSelecionada);        
+             Venda obj = listConserto.get(linhaSelecionada);        
              daoVenda.remover(obj);        
              atualizaTabela();   
              trataEdicao(false);      
@@ -424,6 +476,10 @@ public class FormVenda extends javax.swing.JDialog {
     private void txtCodigoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoVendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoVendaActionPerformed
+
+    private void txtPrecoConsertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoConsertoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecoConsertoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -480,21 +536,26 @@ public class FormVenda extends javax.swing.JDialog {
     private javax.swing.JButton btnProximoAparelho;
     private javax.swing.JButton btnSalvarAparelho;
     private javax.swing.JButton btnUltimoAparelho;
-    private javax.swing.JComboBox<String> cbxCliente;
+    private javax.swing.JComboBox<String> cbxAparelho;
+    private javax.swing.JComboBox<String> cbxTecnico;
     private Modelo.ConverteData converteData1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private java.util.List<Cliente> listCliente;
-    private java.util.List<Venda> listVenda;
+    private java.util.List<Aparelho> listAparelho;
+    private java.util.List<Conserto> listConserto;
+    private java.util.List<Tecnico> listTecnico;
     private javax.swing.JPanel painelAcaoAparelho;
     private javax.swing.JPanel painelDadosAparelho;
     private javax.swing.JPanel painelNavegacao;
     private javax.swing.JTable tblVenda;
     private javax.swing.JLabel txtCodigoAparelhos;
+    private javax.swing.JLabel txtCodigoAparelhos1;
     private javax.swing.JTextField txtCodigoVenda;
-    private javax.swing.JFormattedTextField txtDataVenda;
+    private javax.swing.JFormattedTextField txtDataConserto;
+    private javax.swing.JTextField txtPrecoConserto;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

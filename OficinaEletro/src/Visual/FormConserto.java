@@ -9,6 +9,7 @@ import Modelo.DAOCliente;
 import Modelo.DAOConserto;
 import Modelo.DAOTecnico;
 import Modelo.Tecnico;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,6 +31,69 @@ public class FormConserto extends javax.swing.JDialog {
         listAparelho.addAll(daoAparelho.getLista());
         listTecnico.clear();
         listTecnico.addAll(daoTecnico.getLista());
+    }
+    
+    public boolean validaCampos() {
+        if (!(txtNomeAparelho.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o nome do aparelho");
+            txtNomeAparelho.requestFocus();
+            return false;
+        }
+        
+        if (!(txtMarcaAparelho.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "Informe a marca do aparelho");
+            txtMarcaAparelho.requestFocus();
+            return false;
+        }
+
+        if (!(txtDataRecebimento.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "Informe a data de recebimento do aparelho");
+            txtDataRecebimento.requestFocus();
+            return false;
+        }
+        
+        if (!(txtDataGarantia.getText().length() > 0)) {
+            JOptionPane.showMessageDialog(null, "Informe a data de garantia do aparelho");
+            txtDataGarantia.requestFocus();
+            return false;
+        }
+        
+        if (!(cbxCliente.getSelectedIndex() >= 0)) {
+            JOptionPane.showMessageDialog(null, "Informe o dono do aparelho");
+            cbxCliente.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    
+    private void trataEdicao(boolean editando) {
+        btnCancelarAparelho.setEnabled(editando);
+        btnSalvarAparelho.setEnabled(editando);
+        btnEditarAparelho.setEnabled(!editando);
+        int linha = listAparelhos.size() - 1;
+        if (linha < 0) {
+            btnExcluirAparelho.setEnabled(false);
+            txtCodigoAparelhos.setText("");
+            txtNomeAparelhos.setText("");
+            txtMarcaAparelhos.setText("");
+            txtDataRecebimento.setText("");
+            txtDataGarantia.setText("");
+        } else {
+            btnExcluirAparelho.setEnabled(!editando);
+        }
+        btnExcluirAparelho.setEnabled(!editando);
+        btnNovoAparelho.setEnabled(!editando);
+        btnFecharAparelho.setEnabled(!editando);
+        btnPrimeiroAparelho.setEnabled(!editando);
+        btnProximoAparelho.setEnabled(!editando);
+        btnAnteriorAparelho.setEnabled(!editando);
+        btnUltimoAparelho.setEnabled(!editando);
+        txtNomeAparelhos.setEnabled(editando);
+        txtMarcaAparelhos.setEnabled(editando);
+        txtDataRecebimento.setEditable(editando);
+        txtDataGarantia.setEditable(editando);
+        cbxCliente.setEnabled(editando);
+        tblAparelho.setEnabled(editando);
     }
     
     public void atualizaTabela() {
@@ -67,6 +131,31 @@ public class FormConserto extends javax.swing.JDialog {
         abaListagem = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblResumoVenda = new javax.swing.JTable();
+        painelDadosAparelho = new javax.swing.JPanel();
+        painelAcaoAparelho = new javax.swing.JPanel();
+        btnNovoAparelho = new javax.swing.JButton();
+        btnEditarAparelho = new javax.swing.JButton();
+        btnCancelarAparelho = new javax.swing.JButton();
+        btnSalvarAparelho = new javax.swing.JButton();
+        btnExcluirAparelho = new javax.swing.JButton();
+        txtCodigoAparelhos = new javax.swing.JLabel();
+        txtCodigoVenda = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        javax.swing.text.MaskFormatter maskData = null;
+
+        try{
+            maskData = new javax.swing.text.MaskFormatter("##/##/####");
+            maskData.setPlaceholderCharacter('_');
+        }catch(Exception e){
+
+        }
+        txtDataConserto = new javax.swing.JFormattedTextField(maskData);
+        jLabel3 = new javax.swing.JLabel();
+        cbxTecnico = new javax.swing.JComboBox<>();
+        txtPrecoConserto = new javax.swing.JTextField();
+        txtCodigoAparelhos1 = new javax.swing.JLabel();
+        cbxAparelho = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Visualizador de Vendas");
@@ -140,6 +229,131 @@ public class FormConserto extends javax.swing.JDialog {
 
         abas.addTab("Listagem", abaListagem);
 
+        painelAcaoAparelho.setBorder(javax.swing.BorderFactory.createTitledBorder("Ações"));
+        painelAcaoAparelho.setLayout(new java.awt.GridLayout());
+
+        btnNovoAparelho.setText("Novo");
+        btnNovoAparelho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoAparelhoActionPerformed(evt);
+            }
+        });
+        painelAcaoAparelho.add(btnNovoAparelho);
+
+        btnEditarAparelho.setText("Editar");
+        btnEditarAparelho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarAparelhoActionPerformed(evt);
+            }
+        });
+        painelAcaoAparelho.add(btnEditarAparelho);
+
+        btnCancelarAparelho.setText("Cancelar");
+        btnCancelarAparelho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarAparelhoActionPerformed(evt);
+            }
+        });
+        painelAcaoAparelho.add(btnCancelarAparelho);
+
+        btnSalvarAparelho.setText("Salvar");
+        btnSalvarAparelho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarAparelhoActionPerformed(evt);
+            }
+        });
+        painelAcaoAparelho.add(btnSalvarAparelho);
+
+        btnExcluirAparelho.setText("Excluir");
+        btnExcluirAparelho.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirAparelhoActionPerformed(evt);
+            }
+        });
+        painelAcaoAparelho.add(btnExcluirAparelho);
+
+        txtCodigoAparelhos.setText("Código:");
+
+        txtCodigoVenda.setEnabled(false);
+        txtCodigoVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoVendaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Data de Recebimento:");
+
+        jLabel3.setText("Técnico:");
+
+        txtPrecoConserto.setEnabled(false);
+        txtPrecoConserto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecoConsertoActionPerformed(evt);
+            }
+        });
+
+        txtCodigoAparelhos1.setText("Preço:");
+
+        jLabel4.setText("Aparelho:");
+
+        javax.swing.GroupLayout painelDadosAparelhoLayout = new javax.swing.GroupLayout(painelDadosAparelho);
+        painelDadosAparelho.setLayout(painelDadosAparelhoLayout);
+        painelDadosAparelhoLayout.setHorizontalGroup(
+            painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(painelAcaoAparelho, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                        .addComponent(txtCodigoAparelhos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCodigoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtCodigoAparelhos1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPrecoConserto)
+                            .addComponent(txtDataConserto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cbxAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        painelDadosAparelhoLayout.setVerticalGroup(
+            painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
+                .addComponent(painelAcaoAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigoVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoAparelhos))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtPrecoConserto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigoAparelhos1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDataConserto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(cbxTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(cbxAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(36, 36, 36))
+        );
+
+        abas.addTab("Dados", painelDadosAparelho);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,6 +419,60 @@ public class FormConserto extends javax.swing.JDialog {
         tblResumoVenda.scrollRectToVisible(tblResumoVenda.getCellRect(linha, 0, true));
     }//GEN-LAST:event_btnUltimoAparelhoActionPerformed
 
+    private void btnNovoAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoAparelhoActionPerformed
+        // TODO add your handling code here:
+        listConserto.add((Conserto) new Conserto());
+        int linha = listConserto.size() -1;
+        tblResumoVenda.setRowSelectionInterval(linha, linha);
+        txtDataConserto.requestFocus();
+        trataEdicao(true);
+    }//GEN-LAST:event_btnNovoAparelhoActionPerformed
+
+    private void btnEditarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAparelhoActionPerformed
+        // TODO add your handling code here:
+        trataEdicao(true);
+        txtDataConserto.requestFocus();
+    }//GEN-LAST:event_btnEditarAparelhoActionPerformed
+
+    private void btnCancelarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAparelhoActionPerformed
+        // TODO add your handling code here:
+        trataEdicao(false);
+        atualizaTabela();
+    }//GEN-LAST:event_btnCancelarAparelhoActionPerformed
+
+    private void btnSalvarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAparelhoActionPerformed
+        // TODO add your handling code here:
+        if(validaCampos()){
+            int linhaSelecionada = tblVenda.getSelectedRow();
+            Venda obj = listConserto.get(linhaSelecionada);
+            daoVenda.salvar(obj);
+            atualizaTabela();
+            trataEdicao(false);
+        }
+    }//GEN-LAST:event_btnSalvarAparelhoActionPerformed
+
+    private void btnExcluirAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirAparelhoActionPerformed
+        // TODO add your handling code here:
+        int opcao = JOptionPane.showOptionDialog(null, "Confirma a exclusão?",
+            "Pergunta",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+            null, new String [] {"Sim","Não"},"Sim");
+        if(opcao==0){
+            int linhaSelecionada = tblVenda.getSelectedRow();
+            Venda obj = listConserto.get(linhaSelecionada);
+            daoVenda.remover(obj);
+            atualizaTabela();
+            trataEdicao(false);
+        }
+    }//GEN-LAST:event_btnExcluirAparelhoActionPerformed
+
+    private void txtCodigoVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoVendaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoVendaActionPerformed
+
+    private void txtPrecoConsertoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecoConsertoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecoConsertoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,18 +526,35 @@ public class FormConserto extends javax.swing.JDialog {
     private javax.swing.JPanel abaListagem;
     private javax.swing.JTabbedPane abas;
     private javax.swing.JButton btnAnteriorAparelho;
+    private javax.swing.JButton btnCancelarAparelho;
+    private javax.swing.JButton btnEditarAparelho;
+    private javax.swing.JButton btnExcluirAparelho;
     private javax.swing.JButton btnFecharAparelho;
+    private javax.swing.JButton btnNovoAparelho;
     private javax.swing.JButton btnPrimeiroAparelho;
     private javax.swing.JButton btnProximoAparelho;
+    private javax.swing.JButton btnSalvarAparelho;
     private javax.swing.JButton btnUltimoAparelho;
+    private javax.swing.JComboBox<String> cbxAparelho;
+    private javax.swing.JComboBox<String> cbxTecnico;
     private Modelo.ConverteData converteData1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private java.util.List<Aparelho> listAparelho;
     private java.util.List<Cliente> listCliente;
     private java.util.List<Conserto> listConserto;
     private java.util.List<Tecnico> listTecnico;
+    private javax.swing.JPanel painelAcaoAparelho;
+    private javax.swing.JPanel painelDadosAparelho;
     private javax.swing.JPanel painelNavegacao;
     private javax.swing.JTable tblResumoVenda;
+    private javax.swing.JLabel txtCodigoAparelhos;
+    private javax.swing.JLabel txtCodigoAparelhos1;
+    private javax.swing.JTextField txtCodigoVenda;
+    private javax.swing.JFormattedTextField txtDataConserto;
+    private javax.swing.JTextField txtPrecoConserto;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

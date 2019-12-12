@@ -12,17 +12,10 @@ import java.util.Objects;
 public class Venda implements Serializable{
     
     private Integer idVenda;
-    private Cliente idCliente;
-    private Calendar dataVenda;
-
-    @Override
-    public String toString() {
-        return "Venda{" + "idCliente=" + idCliente + '}';
-    }
-
-    public Venda() {
-
-    }
+    private Double precoConserto;
+    private Calendar dataConserto;
+    private Tecnico idTecnico;
+    private Aparelho idAparelho;
 
     public Integer getIdVenda() {
         return idVenda;
@@ -32,25 +25,45 @@ public class Venda implements Serializable{
         this.idVenda = idVenda;
     }
 
-    public Cliente getIdCliente() {
-        return idCliente;
+    public Double getPrecoConserto() {
+        return precoConserto;
     }
 
-    public void setIdCliente(Cliente idCliente) {
-        this.idCliente = idCliente;
+    public void setPrecoConserto(Double precoConserto) {
+        this.precoConserto = precoConserto;
     }
 
-    public Calendar getDataVenda() {
-        return dataVenda;
+    public Calendar getDataConserto() {
+        return dataConserto;
     }
 
-    public void setDataVenda(Calendar dataVenda) {
-        this.dataVenda = dataVenda;
+    public void setDataConserto(Calendar dataConserto) {
+        this.dataConserto = dataConserto;
     }
+
+    public Tecnico getIdTecnico() {
+        return idTecnico;
+    }
+
+    public void setIdTecnico(Tecnico idTecnico) {
+        this.idTecnico = idTecnico;
+    }
+
+    public Aparelho getIdAparelho() {
+        return idAparelho;
+    }
+
+    public void setIdAparelho(Aparelho idAparelho) {
+        this.idAparelho = idAparelho;
+    }
+
+    public Venda() {
+
+    }  
     
-    public String getDataVendaFormatado(){
+    public String getDataConsertoFormatado(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(dataVenda.getTime());
+        return sdf.format(dataConserto.getTime());
     }
     
     @Override

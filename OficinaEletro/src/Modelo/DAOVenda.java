@@ -13,22 +13,24 @@ import javax.swing.JOptionPane;
  * @author CelsoAugusto
  */
 public class DAOVenda {
-    DAOCliente daoCliente = new DAOCliente();
-    public List<Venda> getLista() {
-        String sql = "select * from venda";
-        List<Venda> lista = new ArrayList<>();
+    DAOAparelho daoAparelho = new DAOAparelho();
+    DAOTecnico daoTecnico = new DAOTecnico();
+    public List<Conserto> getLista() {
+        String sql = "select * from conserto";
+        List<Conserto> lista = new ArrayList<>();
         try {
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Calendar cal = Calendar.getInstance();
-                Venda obj = new Venda();
-                obj.setIdVenda(rs.getInt("idVenda"));
-                java.sql.Date dt = rs.getDate("dataVenda");
+                Conserto obj = new Conserto();
+                obj.setIdConserto(rs.getInt("idConserto"));
+                java.sql.Date dt = rs.getDate("dataConserto");
                 Calendar c = Calendar.getInstance();
                 c.setTime(dt);
-                obj.setDataVenda(c);
-                obj.setIdCliente(daoCliente.localizar(rs.getInt("Cliente_idCliente")));
+                obj.setDataConserto(c);
+                obj.setIdTecnico(daoTecnico.localizar(rs.getInt("Tecnico_idTecnico")));
+                obj.setIdAparelho(daoAparelho.localizar(rs.getInt("Aparelho_idAparelho")));
                 lista.add(obj);
             }
         } catch (SQLException ex) {
@@ -46,16 +48,18 @@ public class DAOVenda {
     }
     
     public boolean incluir(Venda obj){
-        String sql = "Insert into venda (Cliente_idCliente, dataVenda) values (?,?)";
+        String sql = "Insert into conserto (precoConserto, dataConserto, Tecnico_idTecnico, Aparelho_idAparelho) values (?,?,?,?)";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
-            pst.setInt(1, obj.getIdCliente().getIdCliente());
-            pst.setDate(2, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));
+            pst.setDouble(1, obj.getPrecoConserto());
+            pst.setDate(2, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
+            pst.setInt(3, obj.getIdTecnico().getIdTecnico());
+            pst.setInt(4, obj.getIdAparelho().getIdAparelho());
             if(pst.executeUpdate() > 0){
-                JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso");
+                JOptionPane.showMessageDialog(null, "Conserto cadastrado com sucesso");
                 return true;
             }else{
-                JOptionPane.showMessageDialog(null, "Venda não cadastrada");
+                JOptionPane.showMessageDialog(null, "Conserto não cadastrado");
                 return false;
             }
         }catch(SQLException e){
@@ -65,53 +69,54 @@ public class DAOVenda {
     }
     
     public boolean alterar(Venda obj){
-        String sql = "Update venda set Cliente_idCliente=?, dataVenda=? where idVenda=?";
+        String sql = "Update conserto set precoConserto=?, dataConserto=?, Tecnico_idTecnico=?, Aparelho_idAparelho=? where idVenda=?";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
-            pst.setInt(1, obj.getIdCliente().getIdCliente());
-            pst.setDate(2, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));
-            pst.setInt(3, obj.getIdVenda());
+            pst.setDouble(1, obj.getPrecoConserto());
+            pst.setDate(2, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
+            pst.setInt(3, obj.getIdTecnico().getIdTecnico());
+            pst.setInt(4, obj.getIdAparelho().getIdAparelho());
             if(pst.executeUpdate()>0){
-                JOptionPane.showMessageDialog(null, "Venda alterada com sucesso");
+                JOptionPane.showMessageDialog(null, "Conserto alterado com sucesso");
                 return true;
             }else{
-                JOptionPane.showMessageDialog(null, "Venda não alterada");
+                JOptionPane.showMessageDialog(null, "Conserto não alterado");
                 return false;
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Venda não alterada. Erro de SQL "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Conserto não alterado. Erro de SQL "+e.getMessage());
             return false;
         }
     }
     
     public boolean remover(Venda obj){
-        String sql = "delete from venda where idVenda=?";
+        String sql = "delete from conserto where idConserto=?";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             pst.setInt(1, obj.getIdVenda());          
             if(pst.executeUpdate()>0){
-                JOptionPane.showMessageDialog(null, "Venda removida com sucesso");
+                JOptionPane.showMessageDialog(null, "Conserto removido com sucesso");
                 return true;
             }else{
-                JOptionPane.showMessageDialog(null, "Venda não removida");
+                JOptionPane.showMessageDialog(null, "Conserto não removido");
                 return false;
             }
         }catch(SQLException e){
-            JOptionPane.showMessageDialog(null, "Venda não removida. Erro de SQL"+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Conserto não removido. Erro de SQL"+e.getMessage());
             return false;
         }
     }
     
     public Venda localizar(Integer id){
-       String sql = "select * from venda where idVenda=?";
+       String sql = "select * from conserto where idConserto=?";
        Venda obj = new Venda();
        try{
            PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
            pst.setInt(1, id);
            ResultSet rs = pst.executeQuery();
            while(rs.next()){
-               obj.setIdVenda(rs.getInt("idVenda"));
-               pst.setDate(1, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));               
+               obj.setIdVenda(rs.getInt("idConserto"));
+               pst.setDate(1, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));               
                return obj;
            }
        }catch(SQLException e){
@@ -120,21 +125,4 @@ public class DAOVenda {
        return null;
    }
     
-    public Venda localizarId(Integer id){
-       String sql = "select dataVenda from venda where idVenda=?";
-       Venda obj = new Venda();
-       try{
-           PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
-           pst.setInt(1, id);
-           ResultSet rs = pst.executeQuery();
-           while(rs.next()){
-               obj.setIdVenda(rs.getInt("idVenda"));
-               pst.setDate(1, new java.sql.Date(obj.getDataVenda().getTimeInMillis()));               
-               return obj;
-           }
-       }catch(SQLException e){
-           JOptionPane.showMessageDialog(null, "Erro de SQL: "+e.getMessage());
-       }
-       return null;
-   }
 }
