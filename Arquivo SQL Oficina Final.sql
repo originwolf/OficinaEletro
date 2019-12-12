@@ -32,11 +32,11 @@ CREATE TABLE IF NOT EXISTS `aparelho` (
 -- Copiando dados para a tabela oficinaeletro.aparelho: ~6 rows (aproximadamente)
 /*!40000 ALTER TABLE `aparelho` DISABLE KEYS */;
 INSERT INTO `aparelho` (`idAparelho`, `nomeAparelho`, `marcaAparelho`, `dataGarantia`, `dataRecebimentoAparelho`, `Cliente_idCliente`) VALUES
-	(1, 'AirFryer', 'Arno', '2018-06-14', '2018-06-14', 1),
-	(2, 'Ferro Elétrico', 'Arno', '2019-08-30', '2018-06-13', 1),
-	(3, 'Enceradeira', 'Mondial', '2019-08-30', '2018-06-16', 2),
-	(5, 'Ferro elétrico', 'Arno', '2019-08-30', '2018-06-18', 2),
-	(6, 'Aspirador', 'Arno', '2020-12-03', '2019-12-03', 1),
+	(1, 'Panela de Arroz', 'Arno', '2019-01-12', '2019-01-12', 1),
+	(2, 'Chapinha', 'Mallory', '2019-11-21', '2019-11-21', 1),
+	(3, 'Tanquinho', 'Brastemp', '2019-08-30', '2019-08-30', 2),
+	(5, 'Serra circular', 'Makita', '2019-08-30', '2019-08-30', 2),
+	(6, 'Aspirador', 'Wallita', '2020-12-03', '2019-12-03', 1),
 	(7, 'Acrilex', 'Acrilex', '2020-05-04', '2019-12-04', 3);
 /*!40000 ALTER TABLE `aparelho` ENABLE KEYS */;
 
@@ -59,19 +59,16 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 -- Copiando dados para a tabela oficinaeletro.cliente: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
 INSERT INTO `cliente` (`idCliente`, `nomeCliente`, `telefoneCliente`, `cpfCliente`, `ruaCliente`, `numeroCasaCliente`, `bairroCliente`, `cidadeCliente`, `ufCliente`, `emailCliente`) VALUES
-	(1, 'Pedro', '35998563930', '1234567891', 'Rua 1', '320', 'Bairro 1', 'Machado', 'MG', 'teste@teste.com'),
-	(2, 'Celso', '21965894569', '9876543219', 'Rua 2', '1010', 'Centro', 'Rio de Janeiro', 'SP', 'celso@celso.com'),
-	(3, 'Josi', '35354351546', '5646546456', 'Rua 3', '2469', 'Centro', 'Machado', 'MG', 'josi@josi.com');
+	(1, 'Ceila', '35995684635', '6545646456', 'Rua Jacaré', '69', 'Santa Luzia', 'Machado', 'MG', 'ceila@ceila.com'),
+	(2, 'Celso', '35964548798', '8464894646', 'Rua Crocodilo', '24', 'Centro', 'Machado', 'MG', 'celso@celso.com'),
+	(3, 'Josi', '35354351546', '8798789786', 'Rua Aligator', '11', 'Santo Antonio', 'Machado', 'MG', 'josi@josi.com');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 
 
 -- Copiando estrutura para tabela oficinaeletro.conserto
 CREATE TABLE IF NOT EXISTS `conserto` (
   `idConserto` int(11) NOT NULL AUTO_INCREMENT,
-  `precoConserto` float(6,2) DEFAULT NULL,
-  `descricaoDefeito` varchar(100) NOT NULL,
-  `consertoRealizado` varchar(100) NOT NULL,
-  `dataConserto` date DEFAULT NULL,
+  `precoConserto` int(11) DEFAULT NULL,
   `Tecnico_idTecnico` int(11) NOT NULL,
   `Aparelho_idAparelho` int(11) NOT NULL,
   PRIMARY KEY (`idConserto`,`Tecnico_idTecnico`,`Aparelho_idAparelho`),
@@ -79,14 +76,15 @@ CREATE TABLE IF NOT EXISTS `conserto` (
   KEY `fk_Conserto_Aparelho1_idx` (`Aparelho_idAparelho`),
   CONSTRAINT `fk_Conserto_Aparelho1` FOREIGN KEY (`Aparelho_idAparelho`) REFERENCES `aparelho` (`idAparelho`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Conserto_Tecnico1` FOREIGN KEY (`Tecnico_idTecnico`) REFERENCES `tecnico` (`idTecnico`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- Copiando dados para a tabela oficinaeletro.conserto: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `conserto` DISABLE KEYS */;
-INSERT INTO `conserto` (`idConserto`, `precoConserto`, `descricaoDefeito`, `consertoRealizado`, `dataConserto`, `Tecnico_idTecnico`, `Aparelho_idAparelho`) VALUES
-	(1, 15.00, 'Cabo partido', 'Troca do cabo', '2018-06-16', 2, 2),
-	(2, 15.00, 'Cabo partido', 'Troca do cabo', '2018-06-16', 2, 2),
-	(3, 20.00, 'Resistencia queimada', 'Troca da resistencia', '2018-06-14', 2, 1);
+INSERT INTO `conserto` (`idConserto`, `precoConserto`, `Tecnico_idTecnico`, `Aparelho_idAparelho`) VALUES
+	(1, 22, 2, 2),
+	(4, 35, 3, 5),
+	(5, 35, 3, 7),
+	(6, 56, 3, 1);
 /*!40000 ALTER TABLE `conserto` ENABLE KEYS */;
 
 
@@ -102,8 +100,8 @@ CREATE TABLE IF NOT EXISTS `estoque` (
 -- Copiando dados para a tabela oficinaeletro.estoque: ~3 rows (aproximadamente)
 /*!40000 ALTER TABLE `estoque` DISABLE KEYS */;
 INSERT INTO `estoque` (`idEstoque`, `nomePeca`, `quantidadePeca`, `valorPeca`) VALUES
-	(1, 'Cabo elétrico', 60, 15.00),
-	(2, 'Termostato', 59, 35.00),
+	(1, 'Chapa aquecedora', 60, 39.00),
+	(2, 'Cabo', 59, 12.00),
 	(4, 'Elba', 1, 3000.00);
 /*!40000 ALTER TABLE `estoque` ENABLE KEYS */;
 
@@ -120,9 +118,33 @@ CREATE TABLE IF NOT EXISTS `pecasconserto` (
   CONSTRAINT `fk_Conserto_has_Estoque_Estoque1` FOREIGN KEY (`Estoque_idEstoque`) REFERENCES `estoque` (`idEstoque`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela oficinaeletro.pecasconserto: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela oficinaeletro.pecasconserto: ~1 rows (aproximadamente)
 /*!40000 ALTER TABLE `pecasconserto` DISABLE KEYS */;
+INSERT INTO `pecasconserto` (`Conserto_idConserto`, `Estoque_idEstoque`, `pecasUtilizadas`) VALUES
+	(1, 1, 1);
 /*!40000 ALTER TABLE `pecasconserto` ENABLE KEYS */;
+
+
+-- Copiando estrutura para tabela oficinaeletro.resumo
+CREATE TABLE IF NOT EXISTS `resumo` (
+  `idResumo` int(11) NOT NULL AUTO_INCREMENT,
+  `Cliente_idCliente` int(11) DEFAULT NULL,
+  `Aparelho_idAparelho` int(11) DEFAULT NULL,
+  `Venda_idVenda` int(11) DEFAULT NULL,
+  PRIMARY KEY (`idResumo`),
+  KEY `Cliente_idCliente` (`Cliente_idCliente`),
+  KEY `Aparelho_idAparelho` (`Aparelho_idAparelho`),
+  KEY `Venda_idVenda` (`Venda_idVenda`),
+  CONSTRAINT `resumo_ibfk_1` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`),
+  CONSTRAINT `resumo_ibfk_2` FOREIGN KEY (`Aparelho_idAparelho`) REFERENCES `aparelho` (`idAparelho`),
+  CONSTRAINT `resumo_ibfk_3` FOREIGN KEY (`Venda_idVenda`) REFERENCES `venda` (`idVenda`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- Copiando dados para a tabela oficinaeletro.resumo: ~0 rows (aproximadamente)
+/*!40000 ALTER TABLE `resumo` DISABLE KEYS */;
+INSERT INTO `resumo` (`idResumo`, `Cliente_idCliente`, `Aparelho_idAparelho`, `Venda_idVenda`) VALUES
+	(1, 2, 1, 2);
+/*!40000 ALTER TABLE `resumo` ENABLE KEYS */;
 
 
 -- Copiando estrutura para tabela oficinaeletro.tecnico
@@ -142,12 +164,13 @@ CREATE TABLE IF NOT EXISTS `tecnico` (
   `emailTecnico` varchar(100) DEFAULT NULL,
   `telefoneTecnico` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`idTecnico`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela oficinaeletro.tecnico: ~1 rows (aproximadamente)
+-- Copiando dados para a tabela oficinaeletro.tecnico: ~2 rows (aproximadamente)
 /*!40000 ALTER TABLE `tecnico` DISABLE KEYS */;
 INSERT INTO `tecnico` (`idTecnico`, `nomeTecnico`, `cpfTecnico`, `rgTecnico`, `especialidadeTecnico`, `salarioTecnico`, `carteiraTrabalho`, `ruaTecnico`, `numeroCasaTecnico`, `bairroTecnico`, `cidadeTecnico`, `ufTecnico`, `emailTecnico`, `telefoneTecnico`) VALUES
-	(2, 'Pedro', '1234567891', '9876543219', 'Mecânico', 900.00, '654321654321', 'Rua 1', '320', 'Avenida', 'Itajubá', 'MG', NULL, NULL);
+	(2, 'Celso', '4212313213', '6546546546', 'Mecânico', 900.00, '654564564654', 'Rua Carne de Frango', '2424', 'Santa Luzia', 'Machado', 'MG', NULL, NULL),
+	(3, 'Josi', '2123123121', '3513131233', 'Eletrico', 1800.00, '654654654654', 'Rua Carne de boi', '1111', 'Santo Antonio', 'Machado', 'MG', NULL, NULL);
 /*!40000 ALTER TABLE `tecnico` ENABLE KEYS */;
 
 
@@ -159,14 +182,15 @@ CREATE TABLE IF NOT EXISTS `venda` (
   PRIMARY KEY (`idVenda`),
   KEY `idCliente` (`Cliente_idCliente`),
   CONSTRAINT `venda_ibfk_1` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela oficinaeletro.venda: ~3 rows (aproximadamente)
+-- Copiando dados para a tabela oficinaeletro.venda: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `venda` DISABLE KEYS */;
 INSERT INTO `venda` (`idVenda`, `Cliente_idCliente`, `dataVenda`) VALUES
 	(2, 2, '2019-12-03'),
 	(3, 2, '2019-12-05'),
-	(4, 1, '2019-12-05');
+	(4, 1, '2019-12-05'),
+	(5, 1, '2019-12-12');
 /*!40000 ALTER TABLE `venda` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

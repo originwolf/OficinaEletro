@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import Modelo.Cliente;
 import Modelo.Conserto;
 import Modelo.DAOAparelho;
-import Modelo.DAOCliente;
 import Modelo.DAOConserto;
 import Modelo.DAOTecnico;
 import Modelo.Tecnico;
@@ -40,12 +39,6 @@ public class FormConserto extends javax.swing.JDialog {
             txtPrecoConserto.requestFocus();
             return false;
         }
-
-        if (!(txtDataConserto.getText().length() > 0)) {
-            JOptionPane.showMessageDialog(null, "Informe a data de conserto");
-            txtDataConserto.requestFocus();
-            return false;
-        }
         
         if (!(cbxTecnico.getSelectedIndex() >= 0)) {
             JOptionPane.showMessageDialog(null, "Informe o técnico");
@@ -71,7 +64,6 @@ public class FormConserto extends javax.swing.JDialog {
             btnExcluirAparelho.setEnabled(false);
             txtCodigoVenda.setText("");
             txtPrecoConserto.setText("");
-            txtDataConserto.setText("");
         } else {
             btnExcluirAparelho.setEnabled(!editando);
         }
@@ -84,7 +76,6 @@ public class FormConserto extends javax.swing.JDialog {
         btnUltimoAparelho.setEnabled(!editando);
         txtCodigoVenda.setEnabled(!editando);
         txtPrecoConserto.setEnabled(editando);
-        txtDataConserto.setEditable(editando);
     }
     
     public void atualizaTabela() {
@@ -131,16 +122,6 @@ public class FormConserto extends javax.swing.JDialog {
         btnExcluirAparelho = new javax.swing.JButton();
         txtCodigoAparelhos = new javax.swing.JLabel();
         txtCodigoVenda = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        javax.swing.text.MaskFormatter maskData = null;
-
-        try{
-            maskData = new javax.swing.text.MaskFormatter("##/##/####");
-            maskData.setPlaceholderCharacter('_');
-        }catch(Exception e){
-
-        }
-        txtDataConserto = new javax.swing.JFormattedTextField(maskData);
         jLabel3 = new javax.swing.JLabel();
         cbxTecnico = new javax.swing.JComboBox<>();
         txtPrecoConserto = new javax.swing.JTextField();
@@ -203,9 +184,6 @@ public class FormConserto extends javax.swing.JDialog {
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${precoConserto}"));
         columnBinding.setColumnName("Preco Conserto");
         columnBinding.setColumnClass(Double.class);
-        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${dataConsertoFormatado}"));
-        columnBinding.setColumnName("Data do conserto");
-        columnBinding.setColumnClass(String.class);
         columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${idTecnico}"));
         columnBinding.setColumnName("Tecnico responsável");
         columnBinding.setColumnClass(Modelo.Tecnico.class);
@@ -266,20 +244,28 @@ public class FormConserto extends javax.swing.JDialog {
         txtCodigoAparelhos.setText("Código:");
 
         txtCodigoVenda.setEnabled(false);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblResumoVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idConserto}"), txtCodigoVenda, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         txtCodigoVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoVendaActionPerformed(evt);
             }
         });
 
-        jLabel2.setText("Data de Recebimento:");
-
         jLabel3.setText("Técnico:");
 
         org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listTecnico, cbxTecnico);
         bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblResumoVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idTecnico}"), cbxTecnico, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         txtPrecoConserto.setEnabled(false);
+
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblResumoVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.precoConserto}"), txtPrecoConserto, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
         txtPrecoConserto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPrecoConsertoActionPerformed(evt);
@@ -290,6 +276,8 @@ public class FormConserto extends javax.swing.JDialog {
 
         jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, listAparelho, cbxAparelho);
         bindingGroup.addBinding(jComboBoxBinding);
+        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tblResumoVenda, org.jdesktop.beansbinding.ELProperty.create("${selectedElement.idAparelho}"), cbxAparelho, org.jdesktop.beansbinding.BeanProperty.create("selectedItem"));
+        bindingGroup.addBinding(binding);
 
         jLabel4.setText("Aparelho:");
 
@@ -302,7 +290,7 @@ public class FormConserto extends javax.swing.JDialog {
                 .addComponent(painelAcaoAparelho, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(77, 77, 77)
                 .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
                         .addComponent(txtCodigoAparelhos)
@@ -311,13 +299,11 @@ public class FormConserto extends javax.swing.JDialog {
                     .addGroup(painelDadosAparelhoLayout.createSequentialGroup()
                         .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtCodigoAparelhos1)
-                            .addComponent(jLabel2)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtPrecoConserto)
-                            .addComponent(txtDataConserto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPrecoConserto, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(cbxAparelho, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -334,11 +320,7 @@ public class FormConserto extends javax.swing.JDialog {
                 .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPrecoConserto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigoAparelhos1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDataConserto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(painelDadosAparelhoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(cbxTecnico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -421,14 +403,14 @@ public class FormConserto extends javax.swing.JDialog {
         listConserto.add((Conserto) new Conserto());
         int linha = listConserto.size() -1;
         tblResumoVenda.setRowSelectionInterval(linha, linha);
-        txtDataConserto.requestFocus();
+        txtPrecoConserto.requestFocus();
         trataEdicao(true);
     }//GEN-LAST:event_btnNovoAparelhoActionPerformed
 
     private void btnEditarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAparelhoActionPerformed
         // TODO add your handling code here:
         trataEdicao(true);
-        txtDataConserto.requestFocus();
+        txtPrecoConserto.requestFocus();
     }//GEN-LAST:event_btnEditarAparelhoActionPerformed
 
     private void btnCancelarAparelhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarAparelhoActionPerformed
@@ -535,7 +517,6 @@ public class FormConserto extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> cbxAparelho;
     private javax.swing.JComboBox<String> cbxTecnico;
     private Modelo.ConverteData converteData1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -550,7 +531,6 @@ public class FormConserto extends javax.swing.JDialog {
     private javax.swing.JLabel txtCodigoAparelhos;
     private javax.swing.JLabel txtCodigoAparelhos1;
     private javax.swing.JTextField txtCodigoVenda;
-    private javax.swing.JFormattedTextField txtDataConserto;
     private javax.swing.JTextField txtPrecoConserto;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables

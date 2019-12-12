@@ -1,8 +1,5 @@
 package Modelo;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Objects;
 
 /**
@@ -13,7 +10,6 @@ public class Conserto {
     
     private Integer idConserto;
     private Double precoConserto;
-    private Calendar DataConserto;
     private Tecnico idTecnico;
     private Aparelho idAparelho;
     
@@ -37,14 +33,6 @@ public class Conserto {
         this.precoConserto = precoConserto;
     }
 
-    public Calendar getDataConserto() {
-        return DataConserto;
-    }
-
-    public void setDataConserto(Calendar DataConserto) {
-        this.DataConserto = DataConserto;
-    }
-
     public Tecnico getIdTecnico() {
         return idTecnico;
     }
@@ -59,11 +47,6 @@ public class Conserto {
 
     public void setIdAparelho(Aparelho idAparelho) {
         this.idAparelho = idAparelho;
-    }
-    
-    public String getDataConsertoFormatado(){
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        return sdf.format(DataConserto.getTime());
     }
     
     @Override

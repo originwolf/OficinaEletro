@@ -25,10 +25,6 @@ public class DAOVenda {
                 Calendar cal = Calendar.getInstance();
                 Conserto obj = new Conserto();
                 obj.setIdConserto(rs.getInt("idConserto"));
-                java.sql.Date dt = rs.getDate("dataConserto");
-                Calendar c = Calendar.getInstance();
-                c.setTime(dt);
-                obj.setDataConserto(c);
                 obj.setIdTecnico(daoTecnico.localizar(rs.getInt("Tecnico_idTecnico")));
                 obj.setIdAparelho(daoAparelho.localizar(rs.getInt("Aparelho_idAparelho")));
                 lista.add(obj);
@@ -48,13 +44,12 @@ public class DAOVenda {
     }
     
     public boolean incluir(Venda obj){
-        String sql = "Insert into conserto (precoConserto, dataConserto, Tecnico_idTecnico, Aparelho_idAparelho) values (?,?,?,?)";
+        String sql = "Insert into conserto (precoConserto, Tecnico_idTecnico, Aparelho_idAparelho) values (?,?,?,?)";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             pst.setDouble(1, obj.getPrecoConserto());
-            pst.setDate(2, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
-            pst.setInt(3, obj.getIdTecnico().getIdTecnico());
-            pst.setInt(4, obj.getIdAparelho().getIdAparelho());
+            pst.setInt(2, obj.getIdTecnico().getIdTecnico());
+            pst.setInt(3, obj.getIdAparelho().getIdAparelho());
             if(pst.executeUpdate() > 0){
                 JOptionPane.showMessageDialog(null, "Conserto cadastrado com sucesso");
                 return true;
@@ -69,13 +64,12 @@ public class DAOVenda {
     }
     
     public boolean alterar(Venda obj){
-        String sql = "Update conserto set precoConserto=?, dataConserto=?, Tecnico_idTecnico=?, Aparelho_idAparelho=? where idVenda=?";
+        String sql = "Update conserto set precoConserto=?, Tecnico_idTecnico=?, Aparelho_idAparelho=? where idVenda=?";
         try{
             PreparedStatement pst = Conexao.getPreparedStatemnt(sql);
             pst.setDouble(1, obj.getPrecoConserto());
-            pst.setDate(2, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));
-            pst.setInt(3, obj.getIdTecnico().getIdTecnico());
-            pst.setInt(4, obj.getIdAparelho().getIdAparelho());
+            pst.setInt(2, obj.getIdTecnico().getIdTecnico());
+            pst.setInt(3, obj.getIdAparelho().getIdAparelho());
             if(pst.executeUpdate()>0){
                 JOptionPane.showMessageDialog(null, "Conserto alterado com sucesso");
                 return true;
@@ -115,8 +109,7 @@ public class DAOVenda {
            pst.setInt(1, id);
            ResultSet rs = pst.executeQuery();
            while(rs.next()){
-               obj.setIdVenda(rs.getInt("idConserto"));
-               pst.setDate(1, new java.sql.Date(obj.getDataConserto().getTimeInMillis()));               
+               obj.setIdVenda(rs.getInt("idConserto"));           
                return obj;
            }
        }catch(SQLException e){
